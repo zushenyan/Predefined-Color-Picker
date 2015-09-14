@@ -3,7 +3,7 @@ var gulp = require("gulp");
 var sass = require("gulp-sass");
 var maps = require("gulp-sourcemaps");
 var babel = require("gulp-babel");
-var concat = require("gulp-concat");
+// var concat = require("gulp-concat");
 var browserify = require("browserify");
 var source = require("vinyl-source-stream");
 var babelify = require("babelify");
@@ -16,8 +16,9 @@ var sassFiles = "sass/**/*.scss";
 var sassMainFile = "sass/pcp.scss";
 var compiledSassPath = "css";
 var babelFiles = "babel/**/*.js";
-var compiledBabelPath = "src/js";
-var jsMainFile = "js/pcp.js";
+var babelMainFile = "babel/pcp.js";
+var compiledBabelPath = "js";
+var jsFileBundle = "pcp.js";
 var htmlFiles = "*.html"
 
 function errorHandler(err){
@@ -25,7 +26,7 @@ function errorHandler(err){
 	this.emit("end");
 }
 
-ulp.task("clean", function(){
+gulp.task("clean", function(){
 	return del([compiledSassPath, compiledBabelPath]);
 });
 
@@ -34,26 +35,24 @@ gulp.task("compileSass", function(){
 		.pipe(maps.init())
 		.pipe(sass().on("error", errorHandler))
 		.pipe(maps.write("."))
-		.pipe(gulp.dest(compiledSassPath))
-		.pipe(browserSync.stream());
+		.pipe(gulp.dest(compiledSassPath));
 });
 
 gulp.task("compileBabel", function(){
-	return browserify(jsMainFile, { debug: true }) // produce source map by enabling debug = true
+	return browserify(babelMainFile, { debug: true }) // produce source map by enabling debug = true
 		.transform(babelify)
 		.bundle()
 		.on("error", errorHandler)
-		.pipe(source("app.js"))
-		.pipe(gulp.dest(compiledBabelPath))
-		.pipe(browserSync.stream());
+		.pipe(source(jsFileBundle))
+		.pipe(gulp.dest(compiledBabelPath));
 });
 
 gulp.task("watch", function(){
 	browserSync.init({
 		server: "./"
 	})
-	gulp.watch(sassFiles, ["compileSass"]);
-	gulp.watch(babelFiles, ["compileBabel"]);
+	gulp.watch(sassFiles, ["compileSass"]).on("change", browserSync.reload);
+	gulp.watch(babelFiles, ["compileBabel"]).on("change", browserSync.reload);
 	gulp.watch(htmlFiles, browserSync.reload);
 })
 
