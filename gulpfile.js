@@ -58,7 +58,7 @@ gulp.task("minifyJs", ["compileBabel"], function(){
 		.pipe(gulp.dest(compiledBabelPath));
 });
 
-gulp.task("watch",  ["compileSass", "compileBabel"], function(){
+gulp.task("watch",  ["clean", "compileSass", "compileBabel"], function(){
 	browserSync.init({
 		server: "./"
 	})
