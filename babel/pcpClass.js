@@ -123,7 +123,7 @@ export class PCP{
 		else{
 			uiLi.style.backgroundColor = colorObj.color;
 		}
-		uiSpan.innerText = colorObj.name;
+		uiSpan.appendChild(document.createTextNode(colorObj.name));
 		uiLi.appendChild(uiSpan);
 		return uiLi;
 	}
@@ -167,7 +167,7 @@ export class PCP{
 		container.forEach((val) => {
 			let colorObj = {};
 			let color = val.classList.contains(PCP.COLOR_NONE) ? PCP.COLOR_NONE : val.style.backgroundColor;
-			let name = val.childNodes[0].innerText;
+			let name = val.childNodes[0].innerText || val.childNodes[0].textContent;
 			colorObj["color"] =  color;
 			colorObj["name"] =  name;
 			colorList.push(colorObj);
