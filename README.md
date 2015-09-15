@@ -40,7 +40,7 @@ pcp.addEventListener(function(event){...}, listenerName); // event returns {inde
 ```
 event will return `index` number which corresponds to the upper part colors(palette) and color in string.
 
-And do the following to remove the event.
+And do the following if no longer need to listen on change:
 ```JavaScript
 pcp.removeEventListener(listenerName);
 ```
@@ -52,3 +52,6 @@ pcp.removeEventListener(listenerName);
 * Transpiler/Pre-processor
   * babel
   * sass
+
+## Author & Licence
+MIT, made by Andrew Yan
