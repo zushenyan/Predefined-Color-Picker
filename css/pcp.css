@@ -1,8 +1,7 @@
 .pcp-palette, .pcp-selector {
   margin: 0;
   padding: 10px 0;
-  text-align: center;
-  transition: all ease 1s; }
+  text-align: center; }
   .pcp-palette li, .pcp-selector li {
     display: inline-block;
     position: relative;

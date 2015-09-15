@@ -36,7 +36,6 @@
   margin: 0;
   padding: 10px 0;
   text-align: center;
-  transition: all ease 1s;
 
   li {
     display: inline-block;
@@ -70,14 +69,4 @@
 .pcp-selector {
   @extend .pcp-palette;
   border-top: 1px solid $pcp-selector-seperator-color;
-  // padding: 0;
-  // height: 0;
-  // overflow: hidden;
-  // visibility: hidden;
-
-  // &.expand {
-  //   height: $color-selector-height;
-  //   visibility: visible;
-  //   padding: 10px 0;
-  // }
 }

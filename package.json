@@ -23,8 +23,10 @@
     "del": "^2.0.2",
     "gulp": "^3.9.0",
     "gulp-babel": "^5.2.1",
+    "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.0.4",
     "gulp-sourcemaps": "^1.5.2",
+    "gulp-uglify": "^1.4.1",
     "vinyl-source-stream": "^1.1.0"
   }
 }

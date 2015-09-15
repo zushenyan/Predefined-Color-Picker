@@ -3,7 +3,8 @@ var gulp = require("gulp");
 var sass = require("gulp-sass");
 var maps = require("gulp-sourcemaps");
 var babel = require("gulp-babel");
-// var concat = require("gulp-concat");
+var uglify = require("gulp-uglify");
+var rename = require("gulp-rename");
 var browserify = require("browserify");
 var source = require("vinyl-source-stream");
 var babelify = require("babelify");
@@ -19,7 +20,10 @@ var babelFiles = "babel/**/*.js";
 var babelMainFile = "babel/pcp.js";
 var compiledBabelPath = "js";
 var jsFileBundle = "pcp.js";
+var jsFileMinBundle = "pcp.min.js";
 var htmlFiles = "*.html"
+
+var debug = true;
 
 function errorHandler(err){
 	console.log(err.toString());
@@ -39,7 +43,7 @@ gulp.task("compileSass", function(){
 });
 
 gulp.task("compileBabel", function(){
-	return browserify(babelMainFile, { debug: true }) // produce source map by enabling debug = true
+	return browserify(babelMainFile, { debug: debug }) // produce source map by enabling debug = true
 		.transform(babelify)
 		.bundle()
 		.on("error", errorHandler)
@@ -47,7 +51,14 @@ gulp.task("compileBabel", function(){
 		.pipe(gulp.dest(compiledBabelPath));
 });
 
-gulp.task("watch", function(){
+gulp.task("minifyJs", ["compileBabel"], function(){
+	return gulp.src(compiledBabelPath + "/" + jsFileBundle)
+		.pipe(uglify())
+		.pipe(rename(jsFileMinBundle))
+		.pipe(gulp.dest(compiledBabelPath));
+});
+
+gulp.task("watch",  ["compileSass", "compileBabel"], function(){
 	browserSync.init({
 		server: "./"
 	})
@@ -56,4 +67,4 @@ gulp.task("watch", function(){
 	gulp.watch(htmlFiles, browserSync.reload);
 })
 
-gulp.task("build", ["clean", "compileSass", "compileBabel"]);
+gulp.task("build", ["clean", "compileSass", "minifyJs"]);

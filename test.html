@@ -24,7 +24,10 @@
 		<div class="container">
 			<div id="pcp1"></div>
 		</div>
-		<script src="js/pcp.js"></script>
+		<div class="container">
+			<div id="pcp2"></div>
+		</div>
+		<script src="js/pcp.min.js"></script>
 		<script>
 			var palette = [
 				{color: PCP.COLOR_NONE, name: "A"},
@@ -34,7 +37,36 @@
 			];
 
 			var pcp = new PCP("pcp1", palette, palette);
-			pcp.create();
+
+			pcp.addEventListener(function(e){
+				console.log("I am event1");
+				console.log(e);
+			}, "event1");
+
+			pcp.addEventListener(function(e){
+				console.log("I am event2");
+				console.log(e);
+			}, "event2");
+
+			pcp.addEventListener(function(e){
+				console.log("I am event3");
+				console.log(e);
+			}, "event3");
+
+			pcp.removeEventListener("event2");
+
+			var palette2 = [
+				{color: PCP.COLOR_NONE, name: "Test"},
+				{color: PCP.COLOR_NONE, name: "qq"},
+				{color: PCP.COLOR_NONE, name: "123"},
+				{color: PCP.COLOR_NONE, name: "11"}
+			];
+
+			var pcp2 = new PCP("pcp2", palette2, palette);
+			pcp2.addEventListener(function(e){
+				console.log("I am event1 in pcp2");
+				console.log(e);
+			}, "event1");
 		</script>
 	</body>
 </html>
