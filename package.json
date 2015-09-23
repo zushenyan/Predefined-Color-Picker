@@ -1,21 +1,21 @@
 {
-  "name": "pcp",
+  "name": "fretboard-awesome",
   "version": "1.0.0",
-  "description": "PCP - Predefined Color Picker is an lightweight widget which is used to perform simple color picking job.",
+  "description": "Fretboard Awesome is a widget for showing user-defined notes on the fretboard.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zushenyan/Predefined-Color-Picker.git"
+    "url": "git+https://github.com/zushenyan/Fretboard-Awesome.git"
   },
   "author": "andrew yan",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/zushenyan/Predefined-Color-Picker/issues"
+    "url": "https://github.com/zushenyan/Fretboard-Awesome/issues"
   },
-  "homepage": "https://github.com/zushenyan/Predefined-Color-Picker#readme",
+  "homepage": "https://github.com/zushenyan/Fretboard-Awesome#readme",
   "devDependencies": {
     "babelify": "^6.3.0",
     "browser-sync": "^2.9.3",
@@ -27,6 +27,7 @@
     "gulp-sass": "^2.0.4",
     "gulp-sourcemaps": "^1.5.2",
     "gulp-uglify": "^1.4.1",
+    "gulp-util": "^3.0.6",
     "vinyl-source-stream": "^1.1.0"
   }
 }

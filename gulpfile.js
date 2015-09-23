@@ -1,5 +1,7 @@
+"use strict";
 // dependences
 var gulp = require("gulp");
+var gutil = require("gulp-util");
 var sass = require("gulp-sass");
 var maps = require("gulp-sourcemaps");
 var babel = require("gulp-babel");
@@ -11,27 +13,39 @@ var babelify = require("babelify");
 var browserSync = require("browser-sync").create();
 var del = require("del");
 
-// paths
-var sassPath = "sass";
-var sassFiles = "sass/**/*.scss";
-var sassMainFile = "sass/pcp.scss";
-var compiledSassPath = "css";
-var babelFiles = "babel/**/*.js";
-var babelMainFile = "babel/pcp.js";
-var compiledBabelPath = "js";
-var jsFileBundle = "pcp.js";
-var jsFileMinBundle = "pcp.min.js";
-var htmlFiles = "*.html"
-
+// variables
 var debug = true;
+var version = "0.1.1";
+var appName = "predefined-color-picker" + "-" + version;
+
+// paths
+var sassPath = "src/sass";
+var sassFiles = "src/sass/**/*.scss";
+var sassMainFile = "src/sass/Main.scss";
+var compiledSassPath = "src/css";
+var cssBundleFile = appName + ".css";
+var cssBundleFilePath = "src/css/" + cssBundleFile;
+
+var babelFiles = "src/babel/**/*.js";
+var babelMainFile = "src/babel/Main.js";
+var compiledBabelPath = "src/js";
+var jsBundleFile = appName + ".js";
+var jsBundleMinFile = appName + ".min.js";
+var jsBundleMinFilePath = "src/js/" + jsBundleMinFile;
+
+var testFiles = "src/test/**/*.js";
+var htmlFiles = "src/**/*.html";
+
+var distPath = "dist/";
 
 function errorHandler(err){
 	console.log(err.toString());
+	gutil.beep();
 	this.emit("end");
 }
 
 gulp.task("clean", function(){
-	return del([compiledSassPath, compiledBabelPath]);
+	return del([compiledSassPath, compiledBabelPath, distPath]);
 });
 
 gulp.task("compileSass", function(){
@@ -39,6 +53,7 @@ gulp.task("compileSass", function(){
 		.pipe(maps.init())
 		.pipe(sass().on("error", errorHandler))
 		.pipe(maps.write("."))
+		.pipe(rename(cssBundleFile))
 		.pipe(gulp.dest(compiledSassPath));
 });
 
@@ -47,24 +62,30 @@ gulp.task("compileBabel", function(){
 		.transform(babelify)
 		.bundle()
 		.on("error", errorHandler)
-		.pipe(source(jsFileBundle))
+		.pipe(source(jsBundleFile))
 		.pipe(gulp.dest(compiledBabelPath));
 });
 
 gulp.task("minifyJs", ["compileBabel"], function(){
-	return gulp.src(compiledBabelPath + "/" + jsFileBundle)
+	return gulp.src(compiledBabelPath + "/" + jsBundleFile)
 		.pipe(uglify())
-		.pipe(rename(jsFileMinBundle))
+		.pipe(rename(jsBundleMinFile))
 		.pipe(gulp.dest(compiledBabelPath));
 });
 
 gulp.task("watch",  ["clean", "compileSass", "compileBabel"], function(){
 	browserSync.init({
 		server: "./"
-	})
+	});
 	gulp.watch(sassFiles, ["compileSass"]).on("change", browserSync.reload);
 	gulp.watch(babelFiles, ["compileBabel"]).on("change", browserSync.reload);
 	gulp.watch(htmlFiles, browserSync.reload);
+	gulp.watch(testFiles, browserSync.reload);
 })
 
 gulp.task("build", ["clean", "compileSass", "minifyJs"]);
+
+gulp.task("product", ["build"], function(){
+	return gulp.src([jsBundleMinFilePath, cssBundleFilePath])
+	.pipe(gulp.dest(distPath));
+});
