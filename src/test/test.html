@@ -2,8 +2,8 @@
 <html>
 	<head>
 		<title>test</title>
-		<link rel="stylesheet" href="lib/normalize.css">
-		<link rel="stylesheet" href="css/pcp.css">
+		<link rel="stylesheet" href="../lib/normalize.css">
+		<link rel="stylesheet" href="../css/predefined-color-picker-0.1.1.css">
 		<style>
 			html, body {
 				width: 100%;
@@ -27,46 +27,7 @@
 		<div class="container">
 			<div id="pcp2"></div>
 		</div>
-		<script src="js/pcp.js"></script>
-		<script>
-			var palette = [
-				{color: PCP.COLOR_NONE, name: "A"},
-				{color: "red", name: "B"},
-				{color: "green", name: "C"},
-				{color: "blue", name: "D"},
-			];
-
-			var pcp = new PCP("pcp1", palette, palette);
-
-			pcp.addEventListener(function(e){
-				console.log("I am event1");
-				console.log(e);
-			}, "event1");
-
-			pcp.addEventListener(function(e){
-				console.log("I am event2");
-				console.log(e);
-			}, "event2");
-
-			pcp.addEventListener(function(e){
-				console.log("I am event3");
-				console.log(e);
-			}, "event3");
-
-			pcp.removeEventListener("event2");
-
-			var palette2 = [
-				{color: PCP.COLOR_NONE, name: "Test"},
-				{color: PCP.COLOR_NONE, name: "qq"},
-				{color: PCP.COLOR_NONE, name: "123"},
-				{color: PCP.COLOR_NONE, name: "11"}
-			];
-
-			var pcp2 = new PCP("pcp2", palette2, palette);
-			pcp2.addEventListener(function(e){
-				console.log("I am event1 in pcp2");
-				console.log(e);
-			}, "event1");
-		</script>
+		<script src="../js/predefined-color-picker-0.1.1.js"></script>
+		<script src="../test/TestPCP.js"></script>
 	</body>
 </html>
