@@ -1,6 +1,15 @@
 # Predefined-Color-Picker
 PCP - Predefined Color Picker is an lightweight widget which is used to perform simple color picking job.
 
+## Change Log
+* v0.1.1
+  * Rewrite the structure to make it more beautiful.
+  * Change instantiation statement from `new pcp.PCP()` to `new pcp.PCP().init()`, read instruction below for details.
+  * Rename `setPaletteColors()` to `setPalette()`.
+  * Rename `setSelectorColors()` to `setSelector()`.
+* v0.1.0
+  * An new lovely widget was born, wha!
+
 ## Getting start
 1. Copy files from `dist/predefined-color-picker-x.x.x` directory to your project directory.
 2. Include these files:
