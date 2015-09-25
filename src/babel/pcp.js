@@ -53,6 +53,10 @@ export class PCP{
 			li.addEventListener("click", paletteEvent.bind(this));
 			this._uiPaletteContainer.appendChild(li);
 		}
+		this._notifyListener({
+			type: "setPalette",
+			colorSet: this.getPalette()
+		});
 
 		function paletteEvent(e){
 			let allPaletteColors = this._uiPaletteContainer.children;
@@ -76,7 +80,9 @@ export class PCP{
 	/**
 		@param {string} colors - receives an array of objects with properties of "color" and "name".
 		The array format shuold be like this:
-		[{color: "#ffffff", name: "Foobar"}, {color: "#ffffff", name: "Foobar"}, {color: "#ffffff", name: "Foobar"}...]
+		[{color: "#ffffff", name: "Foobar"},
+		{color: "#ffffff", name: "Foobar"},
+		{color: "#ffffff", name: "Foobar"}...]
 	*/
 	setSelector(colors){
 		this._uiSelectorContainer.innerHTML = "";
@@ -87,6 +93,10 @@ export class PCP{
 			li.addEventListener("click", selectorEvent.bind(this));
 			this._uiSelectorContainer.appendChild(li);
 		}
+		this._notifyListener({
+			type: "setSelector",
+			colorSet: this.getSelector()
+		});
 
 		function selectorEvent(e){
 			let currentSelectionColor = selectedElement(this._uiPaletteContainer);
@@ -101,6 +111,7 @@ export class PCP{
 			bgColor = e.currentTarget.classList.contains(PCP.COLOR_NONE) ? PCP.COLOR_NONE : bgColor;
 			this._paletteColorList = this._parseColorUi(this._uiPaletteContainer);
 			this._notifyListener({
+				type: "selection",
 				index: index,
 				color: bgColor,
 				colorSet: this.getPalette(),

@@ -14,7 +14,7 @@ var browserSync = require("browser-sync").create();
 var del = require("del");
 
 // variables
-var version = "0.1.1";
+var version = "0.1.2";
 var appName = "predefined-color-picker" + "-" + version;
 var debug = true;
 

@@ -38,3 +38,5 @@ pcp2.addEventListener(function(e){
 	console.log("I am event1 in pcp2");
 	console.log(e);
 }, "event1");
+
+pcp.setPalette(palette);
