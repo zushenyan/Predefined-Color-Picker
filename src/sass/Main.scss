@@ -54,6 +54,7 @@
 			&:before { @include slash(45deg); };
 			&:after { @include slash(-45deg); };
 			background-color: $pcp-palette-option-bg-color;
+      opacity: 0.2;
 		}
 
     &.current-selection {
@@ -70,4 +71,9 @@
 .pcp-selector {
   @extend .pcp-palette;
   border-top: 1px solid $pcp-selector-seperator-color;
+  li {
+    &.color-none {
+      opacity: 1;
+    }
+  }
 }

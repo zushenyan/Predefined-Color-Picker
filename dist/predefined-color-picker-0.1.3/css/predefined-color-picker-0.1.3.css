@@ -16,7 +16,8 @@
     .pcp-palette li:before, .pcp-selector li:before, .pcp-palette li:after, .pcp-selector li:after {
       content: ""; }
     .pcp-palette li.color-none, .pcp-selector li.color-none {
-      background-color: white; }
+      background-color: white;
+      opacity: 0.2; }
       .pcp-palette li.color-none:before, .pcp-selector li.color-none:before {
         position: absolute;
         display: block;
@@ -62,5 +63,7 @@
 
 .pcp-selector {
   border-top: 1px solid gray; }
+  .pcp-selector li.color-none {
+    opacity: 1; }
 
 /*# sourceMappingURL=predefined-color-picker-0.1.3.css.map */
