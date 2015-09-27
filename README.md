@@ -3,7 +3,7 @@ PCP - Predefined Color Picker is an lightweight widget which is used to perform 
 
 ## Change Log
 * v0.1.3
-  * United the formation of object `colorSet`.
+  * United the formation of event object.
 * v0.1.1
   * Rewrite the structure to make it more beautiful.
   * Change instantiation statement from `new pcp.PCP()` to `new pcp.PCP().init()`, read instruction below for details.
