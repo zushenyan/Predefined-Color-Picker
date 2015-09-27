@@ -1,4 +1,5 @@
-"use strict";
+import {polyfill} from "babelify/polyfill"; // make it support ES6 feature - Symbol in all platforms.
+
 export class PubSub{
 	constructor(){
 		this._topics = {};
