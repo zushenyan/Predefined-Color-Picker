@@ -1,10 +1,10 @@
 var PCP = pcp.PCP; // namespace
 
 var palette = [
-	{color: PCP.COLOR_NONE, name: "A"},
-	{color: "red", name: "B"},
-	{color: "green", name: "C"},
-	{color: "blue", name: "D"},
+	{color: PCP.COLOR_NONE, label: "A"},
+	{color: "red", label: "B"},
+	{color: "green", label: "C"},
+	{color: "blue", label: "D"},
 ];
 
 var pcp = new PCP().init("pcp1", palette, palette);
@@ -27,10 +27,10 @@ var t3 = pcp.addEventListener(function(e){
 pcp.removeEventListener(t2);
 
 var palette2 = [
-	{color: PCP.COLOR_NONE, name: "Test"},
-	{color: PCP.COLOR_NONE, name: "qq"},
-	{color: PCP.COLOR_NONE, name: "123"},
-	{color: PCP.COLOR_NONE, name: "11"}
+	{color: PCP.COLOR_NONE, label: "Test"},
+	{color: PCP.COLOR_NONE, label: "qq"},
+	{color: PCP.COLOR_NONE, label: "123"},
+	{color: PCP.COLOR_NONE, label: "11"}
 ];
 
 var pcp2 = new PCP().init("pcp2", palette2, palette);

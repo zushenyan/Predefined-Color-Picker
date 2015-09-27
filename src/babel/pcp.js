@@ -80,9 +80,9 @@ export class PCP{
 	/**
 		@param {string} colors - receives an array of objects with properties of "color" and "name".
 		The array format shuold be like this:
-		[{color: "#ffffff", name: "Foobar"},
-		{color: "#ffffff", name: "Foobar"},
-		{color: "#ffffff", name: "Foobar"}...]
+		[{label: "Foobar", color: "#ffffff"},
+		 {label: "Foobar", color: "#ffffff"},
+		 {label: "Foobar", color: "#ffffff"}...]
 	*/
 	setSelector(colors){
 		this._uiSelectorContainer.innerHTML = "";
@@ -182,7 +182,7 @@ export class PCP{
 		else{
 			uiLi.style.backgroundColor = colorObj.color;
 		}
-		uiSpan.appendChild(document.createTextNode(colorObj.name));
+		uiSpan.appendChild(document.createTextNode(colorObj.label));
 		uiLi.appendChild(uiSpan);
 		return uiLi;
 	}
