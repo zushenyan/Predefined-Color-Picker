@@ -1,11 +1,24 @@
-export class ColorUtil {
+export default class ColorUtil {
 	static isHexColors(colors){
-		for(let i = 0; i < colors.length; i++){
-			if(!ColorUtil.HEXCOLOR_REGEXP.test(colors[i])){
+		if(typeof colors === "string" || colors instanceof String){
+			return isValid(colors);
+		}
+		else if(colors instanceof Array){
+			for(let i = 0; i < colors.length; i++){
+				if(!isValid(colors[i])){ return false; }
+			}
+			return true;
+		}
+		else{
+			throw new Error(colors + " is not a string or array");
+		}
+
+		function isValid(hexCode){
+			if(!ColorUtil.HEXCOLOR_REGEXP.test(hexCode) && hexCode !== ColorUtil.COLOR_NONE){
 				return false;
 			}
+			return true;
 		}
-		return true;
 	}
 
 	static colorsToSerial(colors){
@@ -22,10 +35,16 @@ export class ColorUtil {
 	static serialToColors(serial){
 		let rawColors = serial.split("+");
 		let colors = rawColors.map(function(hexCode){
-			return "#" + hexCode;
+			if(hexCode === ColorUtil.COLOR_NONE){
+				return hexCode;
+			}
+			else{
+				return "#" + hexCode;
+			}
 		});
 		return colors;
 	}
 
 	static get HEXCOLOR_REGEXP(){ return /^#[0-9|a-f]{6}$/i; }
+	static get COLOR_NONE(){ return ""; }
 }

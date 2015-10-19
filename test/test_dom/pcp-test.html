@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>test</title>
+		<link rel="stylesheet" href="../../dist/lib/normalize.css">
+		<link rel="stylesheet" href="../../dist/css/Main.css">
+		<style>
+			html, body {
+				width: 100%;
+				height: 100%;
+				text-align: center;
+			}
+
+			.container {
+				position: relative;
+				display: inline-block;
+				border: 1px solid black;
+				top: 50%;
+				transform: translateY(-50%);
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<!-- <div id="pcp1" class="pcp">
+				<div class="palette">
+					<div class="color selected"><div class="label">A</div></div>
+					<div class="color bg-none"><div class="label">B</div></div>
+					<div class="color bg-none selected"><div class="label">c</div></div>
+					<div class="color"><div class="label">d</div></div>
+				</div>
+				<div class="selector">
+					<div class="color"><div class="label">A</div></div>
+					<div class="color bg-none"><div class="label">B</div></div>
+					<div class="color"><div class="label">c</div></div>
+					<div class="color"><div class="label">d</div></div>
+				</div>
+			</div> -->
+			<div id="pcp"></div>
+		</div>
+		<script src="../../dist/js/Main.js"></script>
+		<script>
+			new pcp.PCP();
+		</script>
+	</body>
+</html>

@@ -169,7 +169,7 @@ gulp.task("watch", ["clean"], function(){
 	runSequence(["watchJs", "compileCss", "minifyHtml", "copyMisc"]);
 	gulp.watch(config.path.src.css.files, ["compileCss"]).on("change", browserSync.reload);
 	gulp.watch(config.path.src.html.files, ["minifyHtml"]).on("change", browserSync.reload);
-	gulp.watch(config.path.test.files, browserSync.reload);
+	gulp.watch(config.path.test.files).on("change", browserSync.reload);
 });
 
 gulp.task("dev", ["clean"], function(cb){

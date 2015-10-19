@@ -1,8 +1,8 @@
-.pcp-palette, .pcp-selector {
+.pcp .palette, .pcp .selector {
   margin: 0;
   padding: 10px 0;
   text-align: center; }
-  .pcp-palette li, .pcp-selector li {
+  .pcp .palette .color, .pcp .selector .color {
     display: inline-block;
     position: relative;
     background-color: white;
@@ -11,44 +11,11 @@
     border-radius: 50%;
     border: 1px solid gray;
     margin: 0 10px; }
-    .pcp-palette li:hover, .pcp-selector li:hover {
+    .pcp .palette .color:hover, .pcp .selector .color:hover {
       cursor: pointer; }
-    .pcp-palette li:before, .pcp-selector li:before, .pcp-palette li:after, .pcp-selector li:after {
-      content: ""; }
-    .pcp-palette li.color-none, .pcp-selector li.color-none {
-      background-color: white;
-      opacity: 0.2; }
-      .pcp-palette li.color-none:before, .pcp-selector li.color-none:before {
-        position: absolute;
-        display: block;
-        background-color: lightgray;
-        height: 5px;
-        width: 30px;
-        margin: 0 auto;
-        top: 50%;
-        z-index: 0;
-        -webkit-transform: translateY(-50%) rotate(45deg);
-        -moz-transform: translateY(-50%) rotate(45deg);
-        -ms-transform: translateY(-50%) rotate(45deg);
-        -o-transform: translateY(-50%) rotate(45deg);
-        transform: translateY(-50%) rotate(45deg); }
-      .pcp-palette li.color-none:after, .pcp-selector li.color-none:after {
-        position: absolute;
-        display: block;
-        background-color: lightgray;
-        height: 5px;
-        width: 30px;
-        margin: 0 auto;
-        top: 50%;
-        z-index: 0;
-        -webkit-transform: translateY(-50%) rotate(-45deg);
-        -moz-transform: translateY(-50%) rotate(-45deg);
-        -ms-transform: translateY(-50%) rotate(-45deg);
-        -o-transform: translateY(-50%) rotate(-45deg);
-        transform: translateY(-50%) rotate(-45deg); }
-    .pcp-palette li.current-selection, .pcp-selector li.current-selection {
+    .pcp .palette .color.selected, .pcp .selector .color.selected {
       box-shadow: 0 0 5px 3px aqua; }
-    .pcp-palette li span, .pcp-selector li span {
+    .pcp .palette .color .label, .pcp .selector .color .label {
       position: absolute;
       left: 0;
       right: 0;
@@ -58,12 +25,44 @@
       -moz-transform: translateY(-50%);
       -ms-transform: translateY(-50%);
       -o-transform: translateY(-50%);
-      transform: translateY(-50%);
-      z-index: 2; }
+      transform: translateY(-50%); }
+    .pcp .palette .color.bg-none .label, .pcp .selector .color.bg-none .label {
+      background-color: transparent;
+      opacity: 0.25; }
+      .pcp .palette .color.bg-none .label:before, .pcp .selector .color.bg-none .label:before, .pcp .palette .color.bg-none .label:after, .pcp .selector .color.bg-none .label:after {
+        content: ""; }
+      .pcp .palette .color.bg-none .label:before, .pcp .selector .color.bg-none .label:before {
+        position: absolute;
+        display: block;
+        background-color: lightgray;
+        height: 5px;
+        width: 30px;
+        margin: 0 auto;
+        top: 50%;
+        z-index: -1;
+        -webkit-transform: translateY(-50%) rotate(45deg);
+        -moz-transform: translateY(-50%) rotate(45deg);
+        -ms-transform: translateY(-50%) rotate(45deg);
+        -o-transform: translateY(-50%) rotate(45deg);
+        transform: translateY(-50%) rotate(45deg); }
+      .pcp .palette .color.bg-none .label:after, .pcp .selector .color.bg-none .label:after {
+        position: absolute;
+        display: block;
+        background-color: lightgray;
+        height: 5px;
+        width: 30px;
+        margin: 0 auto;
+        top: 50%;
+        z-index: -1;
+        -webkit-transform: translateY(-50%) rotate(-45deg);
+        -moz-transform: translateY(-50%) rotate(-45deg);
+        -ms-transform: translateY(-50%) rotate(-45deg);
+        -o-transform: translateY(-50%) rotate(-45deg);
+        transform: translateY(-50%) rotate(-45deg); }
 
-.pcp-selector {
+.pcp .selector {
   border-top: 1px solid gray; }
-  .pcp-selector li.color-none {
+  .pcp .selector .color.bg-none .label {
     opacity: 1; }
 
 /*# sourceMappingURL=Main.css.map */

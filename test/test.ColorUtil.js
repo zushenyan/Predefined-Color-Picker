@@ -3,7 +3,7 @@ var pcp = require("../dist/js/Main");
 var ColorUtil = pcp.ColorUtil;
 
 describe("ColorUtil", function(){
-	var goodColors = ["#ffffff", "#aaaaaa", "#bbbbbb"];
+	var goodColors = ["#ffffff", "", "#aaaaaa", "#bbbbbb"];
 	var badColors = ["#ffffff", "#aaa", "#bbbbbb"];
 
 	describe("isHexColors", function(){
@@ -15,22 +15,29 @@ describe("ColorUtil", function(){
 			var result = ColorUtil.isHexColors(badColors);
 			expect(result).to.be.false;
 		});
+		it("shuold throw", function(){
+			function run(){
+				ColorUtil.isHexColors({});
+			}
+			expect(run).to.throw(Error);
+		})
 	});
 
 	describe("serialToColors", function(){
 		it("should work", function(){
-			var serial = "ffffff+aaaaaa+bbbbbb";
+			var serial = "ffffff++aaaaaa+bbbbbb";
 			var result = ColorUtil.serialToColors(serial);
 			expect(result[0]).to.be.equal("#ffffff");
-			expect(result[1]).to.be.equal("#aaaaaa");
-			expect(result[2]).to.be.equal("#bbbbbb");
+			expect(result[1]).to.be.equal("");
+			expect(result[2]).to.be.equal("#aaaaaa");
+			expect(result[3]).to.be.equal("#bbbbbb");
 		});
 	});
 
 	describe("colorsToSerial", function(){
 		it("shuold work", function(){
 			var result = ColorUtil.colorsToSerial(goodColors);
-			expect(result).to.be.equal("ffffff+aaaaaa+bbbbbb");
+			expect(result).to.be.equal("ffffff++aaaaaa+bbbbbb");
 		});
 	});
 });
