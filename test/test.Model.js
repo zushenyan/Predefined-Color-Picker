@@ -5,6 +5,11 @@ var Color = pcp.Color;
 
 describe("Model", function(){
 	var model = null;
+	var listener = {
+		onPaletteColorsSet(p){ },
+		onSelectorColorsSet(s){ },
+		onPaletteColorChanged(p, index, newColor){ }
+	};
 	var palette = [
 		{color: "#ff0000", name: ""},
 		{color: "#00ff00", name: "123"},
@@ -21,9 +26,10 @@ describe("Model", function(){
 
 	describe("constructor", function(){
 		it("should construct correctly", function(){
-			model = new Model(palette, selector);
+			model = new Model(palette, selector, listener);
 			expect(model.palette.colors).to.eql(tp);
 			expect(model.selector.colors).to.eql(ts);
+			expect(model.listener).to.equal(listener);
 		});
 	});
 
@@ -33,10 +39,9 @@ describe("Model", function(){
 			expect(model.palette.colors).to.eql(ts);
 		});
 		it("should execute callback", function(){
-			function callback(p){
-				expect(p).to.equal(model.palette);
-			}
-			model.setPaletteColors(selector, callback);
+			listener.onPaletteColorsSet = function(p){ expect(p.colors).to.eql(ts); };
+			model.setPaletteColors(selector);
+			listener.onPaletteColorsSet = function(p){};
 		});
 	});
 
@@ -46,10 +51,9 @@ describe("Model", function(){
 			expect(model.selector.colors).to.eql(tp);
 		});
 		it("should execute callback", function(){
-			function callback(p){
-				expect(p).to.equal(model.selector);
-			}
-			model.setSelectorColors(selector, callback);
+			listener.onSelectorColorsSet = function(s){ expect(s.colors).to.eql(tp); };
+			model.setSelectorColors(palette);
+			listener.onSelectorColorsSet = function(s){};
 		});
 	});
 
@@ -63,12 +67,9 @@ describe("Model", function(){
 		it("should execute callback", function(){
 			index = 0;
 			color = {color:"#555555", name: "ooo"};
-			function callback(p, index, newColor){
-				expect(index).to.be.equal(index);
-				expect(p.colors[index]).to.eql(Color.transform(newColor));
-				expect(p.colors[index]).to.eql(Color.transform(color));
-			}
-			model.changePaletteColor(index, color, callback);
+			listener.onPaletteColorChanged = function(p, index, newColor){ expect(p.colors[index]).to.eql(Color.transform(newColor)); };
+			model.changePaletteColor(index, color);
+			listener.onPaletteColorChanged = function(p, index, newColor){};
 		});
 		it("should throw", function(){
 			index = 10;

@@ -1,10 +1,10 @@
 var expect = require("chai").expect;
 var pcp = require("../dist/js/Main");
+var Color = pcp.Color;
 var Model = pcp.Model;
 var Controller = pcp.Controller;
-var Color = pcp.Color;
 
-describe("Model", function(){
+describe("Controller", function(){
 	var model = null;
 	var controller = null;
 

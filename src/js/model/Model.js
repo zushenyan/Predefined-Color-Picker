@@ -1,23 +1,24 @@
 import Palette from "./Palette";
 
 export default class Model{
-	constructor(paletteColors, selectorColors){
+	constructor(paletteColors, selectorColors, listener){
 		this.palette = new Palette(paletteColors);
 		this.selector = new Palette(selectorColors);
+		this.listener = listener;
 	}
 
-	setPaletteColors(colors, callback){
+	setPaletteColors(colors){
 		this.palette.colors = colors;
-		if(callback){ callback(this.palette); }
+		if(this.listener){ this.listener.onPaletteColorsSet(this.palette); }
 	}
 
-	setSelectorColors(colors, callback){
+	setSelectorColors(colors){
 		this.selector.colors = colors;
-		if(callback){ callback(this.selector); }
+		if(this.listener){ this.listener.onSelectorColorsSet(this.selector); }
 	}
 
-	changePaletteColor(index, newColor, callback){
-		this.palette.changeColor(index, newColor);
-		if(callback){ callback(this.palette, index, newColor); }
+	changePaletteColor(index, newColor){
+		newColor = this.palette.changeColor(index, newColor);
+		if(this.listener){ this.listener.onPaletteColorChanged(this.palette, index, newColor); }
 	}
 }

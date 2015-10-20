@@ -14,6 +14,6 @@ export default class Palette {
 		if(!(newColor instanceof Color)){
 			newColor = Color.transform(newColor);
 		}
-		this._colors[index] = newColor;
+		return this._colors[index] = newColor;
 	}
 }

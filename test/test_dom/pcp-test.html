@@ -22,25 +22,15 @@
 	</head>
 	<body>
 		<div class="container">
-			<!-- <div id="pcp1" class="pcp">
-				<div class="palette">
-					<div class="color selected"><div class="label">A</div></div>
-					<div class="color bg-none"><div class="label">B</div></div>
-					<div class="color bg-none selected"><div class="label">c</div></div>
-					<div class="color"><div class="label">d</div></div>
-				</div>
-				<div class="selector">
-					<div class="color"><div class="label">A</div></div>
-					<div class="color bg-none"><div class="label">B</div></div>
-					<div class="color"><div class="label">c</div></div>
-					<div class="color"><div class="label">d</div></div>
-				</div>
-			</div> -->
 			<div id="pcp"></div>
+		</div>
+		<div class="container">
+			<div id="pcp2"></div>
 		</div>
 		<script src="../../dist/js/Main.js"></script>
 		<script>
-			new pcp.PCP();
+			var mypcp = new pcp.PCP();
+			mypcp.run();
 		</script>
 	</body>
 </html>

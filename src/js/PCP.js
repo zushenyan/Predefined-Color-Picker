@@ -4,37 +4,67 @@ import Palette from "./model/Palette";
 import Model from "./model/Model";
 import Controller from "./controller/Controller";
 import View from "./view/View";
+import DefaultTemplate from "./view/DefaultTemplate";
+import DummyTemplate from "./view/DummyTemplate";
+import Config from "./Config";
 
 export default class PCP{
-	constructor(){
+	constructor(config){
 		this.model = null;
 		this.controller = null;
 		this.view = null;
 
-		this.domId = "pcp";
-		this.palette = [
-			new Color("", "A"),
-			new Color("#eeeeee", "B"),
-			new Color("", "C"),
-			new Color("", "D"),
-			new Color("", "E"),
-			new Color("", "F"),
-		];
-
-		this.selector = [
-			new Color("#ff0000", "A"),
-			new Color("#e3ff00", "B"),
-			new Color("", "C"),
-			new Color("#00baff", ""),
-			new Color("#0021ff", ""),
-			new Color("#c000c4", ""),
-		];
+		this._config = this._createConfig();
 
 		this.model = new Model();
 		this.controller = new Controller(this.model);
-		this.view = new View(this.domId, this.controller);
+		this.view = new View(this._config.query("id"), this.controller, this._config.query("template"));
+		this.model.listener = this.view;
 
-		this.controller.exec("setPaletteColors", this.palette, this.view.paletteColorsChanged.bind(this.view));
-		this.controller.exec("setSelectorColors", this.selector, this.view.selectorColorsChanged.bind(this.view));
+		this.set(config);
+	}
+
+	set(newConfig = {}){
+		Object.keys(newConfig).forEach((key) => {
+			let newValue = newConfig[key];
+			this._config.update(key, newValue);
+			this._config.exec(key);
+		});
+	}
+
+	run(){
+		this.controller.exec("setPaletteColors", this._config.query("palette"));
+		this.controller.exec("setSelectorColors", this._config.query("selector"));
+	}
+
+	_createConfig(){
+		let dc = PCP.DEFAULT_CONFIG;
+		let c = new Config();
+		c.append("id", dc["id"], ()=>{ this.view.domId = this._config.query("id"); });
+		c.append("palette", dc["palette"], ()=>{ this.controller.exec("setPaletteColors", this._config.query("palette")); });
+		c.append("selector", dc["selector"], ()=>{ this.controller.exec("setSelectorColors", this._config.query("selector")); });
+		c.append("template", dc["template"], ()=>{ this.view.template = this._config.query("template"); });
+		return c;
+	}
+
+	static get DEFAULT_CONFIG(){
+		return {
+			id: "pcp",
+			palette: [
+				{color: "", name: "A"},
+				{color: "", name: "B"},
+				{color: "", name: "C"},
+				{color: "", name: "D"},
+				{color: "", name: "E"},
+			],
+			selector: [
+				{color: "", name: ""},
+				{color: "#ff0000", name: ""},
+				{color: "#e3ff00", name: ""},
+				{color: "#00baff", name: ""},
+				{color: "#0021ff", name: ""},
+			],
+			template: DefaultTemplate
+		};
 	}
 }
