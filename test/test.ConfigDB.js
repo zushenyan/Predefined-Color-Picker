@@ -1,8 +1,8 @@
 var expect = require("chai").expect;
 var pcp = require("../dist/js/Main");
-var Config = pcp.Config;
+var Config = pcp.ConfigDB;
 
-describe("Color", function(){
+describe("ConfigDB", function(){
 	var config = null;
 
 	describe("constructor", function(){

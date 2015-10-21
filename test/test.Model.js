@@ -1,3 +1,4 @@
+var sinon = require("sinon");
 var expect = require("chai").expect;
 var pcp = require("../dist/js/Main");
 var Model = pcp.Model;
@@ -23,6 +24,8 @@ describe("Model", function(){
 
 	var tp = Color.transform(palette);
 	var ts = Color.transform(selector);
+
+	var tokens, sub1, sub2, sub3;
 
 	describe("constructor", function(){
 		it("should construct correctly", function(){
@@ -77,6 +80,50 @@ describe("Model", function(){
 				model.changePaletteColor(index, color);
 			}
 			expect(run).to.throw(Error);
+		});
+	});
+
+	describe("subscribe", function(){
+		it("should trigger publish", function(){
+			sub1 = function(palette){
+				expect(palette).to.eql(model.palette);
+				expect(palette).to.not.equal(model.palette);
+			};
+			sub2 = function(selector){
+				expect(selector).to.eql(model.selector);
+				expect(selector).to.not.equal(model.selector);
+			};
+			sub3 = function(palette, index, newColor){
+				expect(palette).to.eql(model.palette);
+				expect(palette).to.not.equal(model.palette);
+				expect(index).to.be.equal(0);
+				expect(newColor).to.be.eql(newColor);
+			};
+			var newc = {color: "#cbacba", name: "123"};
+
+			tokens = model.subscribe(sub1, sub2, sub3);
+
+			model.setPaletteColors(model.palette.colors);
+			model.setSelectorColors(model.selector.colors);
+			model.changePaletteColor(0, newc);
+		});
+	});
+
+	describe("unsubscribe", function(){
+		it("should really unsubscribe", function(){
+			var spy1 = sinon.spy(sub1);
+			var spy2 = sinon.spy(sub2);
+			var spy3 = sinon.spy(sub3);
+
+			var result = model.unsubscribe(tokens);
+			var newc = {color: "#cbacba", name: "123"};
+			model.setPaletteColors(model.palette.colors);
+			model.setSelectorColors(model.selector.colors);
+			model.changePaletteColor(0, newc);
+
+			expect(spy1.callCount).to.be.equal(0);
+			expect(spy2.callCount).to.be.equal(0);
+			expect(spy3.callCount).to.be.equal(0);
 		});
 	});
 });

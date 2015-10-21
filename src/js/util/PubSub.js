@@ -1,6 +1,6 @@
-import {polyfill} from "babelify/polyfill"; // make it support ES6 feature - Symbol in all platforms.
+import {polyfill} from "babelify/polyfill"; // make it support ES6 feature - Symbol on all platforms.
 
-export class PubSub{
+export default class PubSub{
 	constructor(){
 		this._topics = {};
 	}
@@ -10,13 +10,13 @@ export class PubSub{
 		@param {object} msg - the message you want to send in object format.
 		@return {boolean} - return true if publish successfully else false.
 	*/
-	publish(topic, msg){
+	publish(topic, ...msg){
 		if(!this._topics[topic]){
 			return false;
 		}
 		let subscribers = this._topics[topic];
 		for(let i = 0; i < subscribers.length; i++){
-			subscribers[i].doSomething(msg);
+			subscribers[i].doSomething(...msg);
 		}
 		return true;
 	}
@@ -80,5 +80,4 @@ export class PubSub{
 		}
 		return result;
 	}
-
 }

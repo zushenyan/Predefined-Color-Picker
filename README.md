@@ -1,7 +1,14 @@
 # Predefined-Color-Picker
 PCP - Predefined Color Picker is an lightweight widget which is used to perform simple color picking job.
 
+Works on all **the latest** desktop browser and mobile device.
+
 ## Change Log
+* v0.1.4
+  * Completely rewrite the structure. From a mess to MVC(or MV*).
+  * Now be able to write **plug-in** for PCP, see [here](plug-in).
+  * Not compatible with v0.1.3.
+  * Change
 * v0.1.3
   * United the formation of event object.
   * Supports ES6 feature - Symbol on all platforms. Thanks to babelify!
@@ -97,3 +104,5 @@ pcp.removeEventListener(event1);
 
 ## Author & Licence
 MIT, made by Andrew Yan
+
+[plug-in]: 1

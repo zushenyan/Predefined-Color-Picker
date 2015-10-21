@@ -82,13 +82,9 @@ export default class DefaultTemplate extends Template{
 		if(selectorIndex < 0 || paletteIndex < 0){
 			return;
 		}
-		let newColor = this.controller.query("selector").colors[selectorIndex].color;
-		let name = this.controller.query("palette").colors[paletteIndex].name;
-		let copyColor = {
-			color: newColor,
-			name: name
-		};
-		this.controller.exec("changePaletteColor", paletteIndex, copyColor);
+		let newColor = this.controller.query("selector").colors[selectorIndex];
+		newColor.name = this.controller.query("palette").colors[paletteIndex].name;
+		this.controller.exec("changePaletteColor", paletteIndex, newColor);
 	}
 
 	_makeColorEle(color){

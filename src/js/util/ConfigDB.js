@@ -1,4 +1,4 @@
-export default class Config{
+export default class ConfigDB{
 	constructor(){
 		this.values = {};
 		this.actions = {};

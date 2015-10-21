@@ -1,70 +1,56 @@
-import ColorUtil from "./model/ColorUtil";
-import Color from "./model/Color";
-import Palette from "./model/Palette";
 import Model from "./model/Model";
 import Controller from "./controller/Controller";
 import View from "./view/View";
-import DefaultTemplate from "./view/DefaultTemplate";
-import DummyTemplate from "./view/DummyTemplate";
-import Config from "./Config";
+import ConfigDB from "./util/ConfigDB";
+import DEFAULT_CONFIG from "./DefaultConfig";
 
 export default class PCP{
 	constructor(config){
-		this.model = null;
-		this.controller = null;
-		this.view = null;
+		this._model = null;
+		this._controller = null;
+		this._view = null;
 
 		this._config = this._createConfig();
 
-		this.model = new Model();
-		this.controller = new Controller(this.model);
-		this.view = new View(this._config.query("id"), this.controller, this._config.query("template"));
-		this.model.listener = this.view;
+		this._model = new Model();
+		this._controller = new Controller(this._model);
+		this._view = new View(this._config.query("id"), this._controller, this._config.query("template"));
+		this._model.listener = this._view;
 
-		this.set(config);
+		this.set(config, false);
 	}
 
-	set(newConfig = {}){
+	set(newConfig = {}, run = true){
 		Object.keys(newConfig).forEach((key) => {
 			let newValue = newConfig[key];
 			this._config.update(key, newValue);
-			this._config.exec(key);
+			if(run){
+				this._config.exec(key);
+			}
 		});
 	}
 
 	run(){
-		this.controller.exec("setPaletteColors", this._config.query("palette"));
-		this.controller.exec("setSelectorColors", this._config.query("selector"));
+		Object.keys(this._config.actions).forEach((key) => {
+			this._config.exec(key);
+		});
+	}
+
+	subscribe(onPaletteColorsSet, onSelectorColorsSet, onPaletteColorChanged){
+		return this._controller.exec("subscribe", onPaletteColorsSet, onSelectorColorsSet, onPaletteColorChanged);
+	}
+
+	unsubscribe(tokens){
+		return this._controller.exec("unsubscribe", tokens);
 	}
 
 	_createConfig(){
-		let dc = PCP.DEFAULT_CONFIG;
-		let c = new Config();
-		c.append("id", dc["id"], ()=>{ this.view.domId = this._config.query("id"); });
-		c.append("palette", dc["palette"], ()=>{ this.controller.exec("setPaletteColors", this._config.query("palette")); });
-		c.append("selector", dc["selector"], ()=>{ this.controller.exec("setSelectorColors", this._config.query("selector")); });
-		c.append("template", dc["template"], ()=>{ this.view.template = this._config.query("template"); });
+		let dc = DEFAULT_CONFIG;
+		let c = new ConfigDB();
+		c.append("id", dc["id"], ()=>{ this._view.domId = this._config.query("id"); });
+		c.append("palette", dc["palette"], ()=>{ this._controller.exec("setPaletteColors", this._config.query("palette")); });
+		c.append("selector", dc["selector"], ()=>{ this._controller.exec("setSelectorColors", this._config.query("selector")); });
+		c.append("template", dc["template"], ()=>{ this._view.template = this._config.query("template"); });
 		return c;
-	}
-
-	static get DEFAULT_CONFIG(){
-		return {
-			id: "pcp",
-			palette: [
-				{color: "", name: "A"},
-				{color: "", name: "B"},
-				{color: "", name: "C"},
-				{color: "", name: "D"},
-				{color: "", name: "E"},
-			],
-			selector: [
-				{color: "", name: ""},
-				{color: "#ff0000", name: ""},
-				{color: "#e3ff00", name: ""},
-				{color: "#00baff", name: ""},
-				{color: "#0021ff", name: ""},
-			],
-			template: DefaultTemplate
-		};
 	}
 }

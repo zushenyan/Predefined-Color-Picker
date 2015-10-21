@@ -1,3 +1,5 @@
+import Util from "../util/Util";
+
 export default class Controller{
 	constructor(model){
 		this.model = model || null;
@@ -6,6 +8,15 @@ export default class Controller{
 	exec(command, ...args){
 		if(this.model[command] instanceof Function){
 			return this.model[command](...args);
+		}
+		else if(this.model[command] instanceof String){
+			return new String(this.model[command]);
+		}
+		else if(this.model[command] instanceof Array){
+			return this.model[command].slice(0);
+		}
+		else if(this.model[command] instanceof Object){
+			return Util.deepClone(this.model[command]);
 		}
 		else if(this.model[command]){
 			return this.model[command];
