@@ -1,0 +1,47 @@
+@import "./Variables";
+@import "./Mixins";
+
+.pcp {
+  .palette {
+    margin: 0;
+    padding: 10px 0;
+    text-align: center;
+
+    .color {
+      display: inline-block;
+      position: relative;
+      background-color: $color-bg;
+      width: $color-width;
+      height: $color-width;
+      border-radius: 50%;
+      border: 1px solid $color-border-color;
+      margin: 0 10px;
+      &:hover { cursor: pointer; }
+      &.selected { box-shadow: 0 0 5px 3px $color-border-selected; }
+      .label {
+        @include centering(absolute, both);
+      }
+      &.bg-none {
+        .label {
+          &:before, &:after { content: ""; }
+          &:before { @include slash(45deg, $color-width); };
+          &:after { @include slash(-45deg, $color-width); };
+          background-color: transparent;
+          opacity: 0.25;
+        }
+      }
+    }
+  }
+
+  .selector {
+    @extend .palette;
+    border-top: 1px solid $separator-color;
+    .color {
+      &.bg-none {
+        .label{
+          opacity: 1;
+        }
+      }
+    }
+  }
+}

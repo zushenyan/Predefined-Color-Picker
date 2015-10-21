@@ -1,0 +1,35 @@
+@import "bourbon";
+
+$slash-color: lightgray;
+
+@mixin slash($rotate-deg, $width){
+  position: absolute;
+  display: block;
+  background-color: $slash-color;
+  height: 5px;
+  width: $width;
+  margin: 0 auto;
+  top: 50%;
+  z-index: -1;
+  @include transform(translateY(-50%) rotate($rotate-deg));
+}
+
+@mixin centering($position, $direction){
+	position: $position;
+	@if $direction == hor { // align horizontally
+		left: 0;
+		right: 0;
+		margin: auto;
+	}
+	@else if $direction == ver { // align vertically
+		top: 50%;
+    @include transform(translateY(-50%));
+	}
+	@else if $direction == both{ // align in both directions
+		left: 0;
+		right: 0;
+		margin: auto;
+		top: 50%;
+    @include transform(translateY(-50%));
+	}
+}
