@@ -1,7 +1,7 @@
 # Predefined-Color-Picker
 PCP - Predefined Color Picker is an lightweight widget which is used to perform simple color picking job.
 
-Visit [Guitar Scale Builder](https://github.com/zushenyan/Guitar-Scale-Builder) for PCP demonstration.
+Visit [Guitar Scale Builder](https://github.com/zushenyan/Guitar-Scale-Builder) for 0.1.3 PCP demonstration.
 
 Works on all **the latest** desktop browsers and mobile devices.
 
