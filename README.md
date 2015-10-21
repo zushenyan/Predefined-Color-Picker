@@ -66,6 +66,7 @@ var palette = [
 ];
 
 var selector = [...];
+<<<<<<< HEAD
 
 var mypcp = new pcp.PCP({
   id: "mypcp",
@@ -73,6 +74,15 @@ var mypcp = new pcp.PCP({
   selector: selector
 });
 
+=======
+
+var mypcp = new pcp.PCP({
+  id: "mypcp",
+  palette: palette,
+  selector: selector
+});
+
+>>>>>>> dev
 mypcp.run();
 ```
 
