@@ -44,7 +44,7 @@ describe("ConfigDB", function(){
 	describe("exec", function(){
 		it("should work", function(){
 			expect(config.exec("foo")).to.equal("foo is 5");
-			expect(config.exec("test")).to.be.empty;
+			expect(config.exec("test")).to.be.null;
 			expect(config.exec("color")).to.equal("color is red");
 		});
 	});
