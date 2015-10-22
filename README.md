@@ -66,7 +66,6 @@ var palette = [
 ];
 
 var selector = [...];
-<<<<<<< HEAD
 
 var mypcp = new pcp.PCP({
   id: "mypcp",
@@ -74,15 +73,6 @@ var mypcp = new pcp.PCP({
   selector: selector
 });
 
-=======
-
-var mypcp = new pcp.PCP({
-  id: "mypcp",
-  palette: palette,
-  selector: selector
-});
-
->>>>>>> dev
 mypcp.run();
 ```
 
@@ -109,6 +99,12 @@ Messed up something in config? `pcp.DEFAULT_CONFIG` can save you from panic!
 mypcp.set(pcp.DEFAULT_CONFIG);
 ```
 
+Use `get` to get option value you want
+```js
+var id = mypcp.get("id");
+var template = mypcp.get("template");
+```
+
 If you want to subscribe changes on color selection:
 ```js
 onPaletteColorsSet = function(){...};
@@ -129,6 +125,12 @@ Don't like default template? Change it!
 mypcp.set({template: pcp.DummyTemplate});
 ```
 `DummyTemplate` is an extremely simple template used for showing how to build a template.
+
+Convert colors to serial or serials to colors
+```js
+ver serial = pcp.ColorUtil.colorsToSerial(mypcp.get("selector")); // "+ff0000+e3ff00+00baff+0021ff"
+var colors = pcp.ColorUtil.serialToColors(serial); // ["", "#ff0000", "#e3ff00", "#00baff", "#0021ff"]
+```
 
 # <a name="template"></a>Build Your Own Template
 You can write your own template as long as you conform `pcp.Template` interface.

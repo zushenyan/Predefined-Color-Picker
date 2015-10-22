@@ -30,6 +30,10 @@ export default class PCP{
 		});
 	}
 
+	get(option){
+		return this._config.query(option);
+	}
+
 	run(){
 		Object.keys(this._config.actions).forEach((key) => {
 			this._config.exec(key);

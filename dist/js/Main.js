@@ -4455,6 +4455,11 @@ var PCP = (function () {
 			});
 		}
 	}, {
+		key: "get",
+		value: function get(option) {
+			return this._config.query(option);
+		}
+	}, {
 		key: "run",
 		value: function run() {
 			var _this2 = this;
@@ -4686,7 +4691,7 @@ var ColorUtil = (function () {
 		value: function colorsToSerial(colors) {
 			var serial = "";
 			for (var i = 0; i < colors.length; i++) {
-				serial += colors[i].slice(1);
+				serial += colors[i].color.slice(1);
 				if (i + 1 < colors.length) {
 					serial += "+";
 				}

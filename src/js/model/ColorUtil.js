@@ -24,7 +24,7 @@ export default class ColorUtil {
 	static colorsToSerial(colors){
 		let serial = "";
 		for(let i = 0; i < colors.length; i++){
-			serial += colors[i].slice(1);
+			serial += colors[i].color.slice(1);
 			if(i + 1 < colors.length){
 				serial += "+";
 			}
