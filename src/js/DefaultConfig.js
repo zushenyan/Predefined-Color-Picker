@@ -1,4 +1,4 @@
-import DefaultTemplate from "./view/DefaultTemplate";
+import NativeTemplate from "./view/template/native/NativeTemplate";
 
 let DEFAULT_CONFIG = {
 	id: "pcp",
@@ -16,7 +16,7 @@ let DEFAULT_CONFIG = {
 		{color: "#00baff", name: ""},
 		{color: "#0021ff", name: ""},
 	],
-	template: DefaultTemplate
+	template: NativeTemplate
 };
 
 export { DEFAULT_CONFIG as default };

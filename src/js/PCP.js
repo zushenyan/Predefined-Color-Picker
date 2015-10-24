@@ -1,60 +1,61 @@
-import Model from "./model/Model";
-import Controller from "./controller/Controller";
+import Store from "./store/Store";
+import Dispatcher from "./dispatcher/Dispatcher";
+import ActionCreator from "./action/ActionCreator";
+import ActionConstants from "./action/ActionConstants";
 import View from "./view/View";
-import ConfigDB from "./util/ConfigDB";
 import DEFAULT_CONFIG from "./DefaultConfig";
 
-export default class PCP{
+export default class PCP {
 	constructor(config){
-		this._model = null;
-		this._controller = null;
-		this._view = null;
-
 		this._config = this._createConfig();
 
-		this._model = new Model();
-		this._controller = new Controller(this._model);
-		this._view = new View(this._config.query("id"), this._controller, this._config.query("template"));
-		this._model.listener = this._view;
+		this._dispatcher = new Dispatcher();
+		this._store = new Store(this._dispatcher);
+		this._actionCreator = new ActionCreator(this._dispatcher);
+		this._view = new View(this._actionCreator, this._store);
 
-		this.set(config, false);
+		this.set(DEFAULT_CONFIG);
 	}
 
-	set(newConfig = {}, run = true){
+	set(newConfig = {}){
 		Object.keys(newConfig).forEach((key) => {
-			let newValue = newConfig[key];
-			this._config.update(key, newValue);
-			if(run){
-				this._config.exec(key);
-			}
+			this._config[key].update(newConfig[key]);
 		});
 	}
 
-	get(option){
-		return this._config.query(option);
+	get(key){
+		return this._config[key].query();
 	}
 
-	run(){
-		Object.keys(this._config.actions).forEach((key) => {
-			this._config.exec(key);
-		});
+	subscribe(onPaletteColorsSet, onSelectorColorsSet){
+		this._store.addListener(ActionConstants.SET_PALETTE_COLORS, onPaletteColorsSet);
+		this._store.addListener(ActionConstants.SET_SELECTOR_COLORS, onSelectorColorsSet);
 	}
 
-	subscribe(onPaletteColorsSet, onSelectorColorsSet, onPaletteColorChanged){
-		return this._controller.exec("subscribe", onPaletteColorsSet, onSelectorColorsSet, onPaletteColorChanged);
-	}
-
-	unsubscribe(tokens){
-		return this._controller.exec("unsubscribe", tokens);
+	unsubscribe(onPaletteColorsSet, onSelectorColorsSet){
+		this._store.removeListener(ActionConstants.SET_PALETTE_COLORS, onPaletteColorsSet);
+		this._store.removeListener(ActionConstants.SET_SELECTOR_COLORS, onSelectorColorsSet);
 	}
 
 	_createConfig(){
-		let dc = DEFAULT_CONFIG;
-		let c = new ConfigDB();
-		c.append("id", dc["id"], ()=>{ this._view.domId = this._config.query("id"); });
-		c.append("palette", dc["palette"], ()=>{ this._controller.exec("setPaletteColors", this._config.query("palette")); });
-		c.append("selector", dc["selector"], ()=>{ this._controller.exec("setSelectorColors", this._config.query("selector")); });
-		c.append("template", dc["template"], ()=>{ this._view.template = this._config.query("template"); });
+		let c = {
+			id: {
+				query: () => { return this._store.getDomId(); },
+				update: (id) => { this._actionCreator[ActionConstants.SET_DOM_ID](id); }
+			},
+			palette: {
+				query: () => { return this._store.getPaletteColors(); },
+				update: (palette) => { this._actionCreator[ActionConstants.SET_PALETTE_COLORS](palette); }
+			},
+			selector: {
+				query: () => { return this._store.getSelectorColors(); },
+				update: (palette) => { this._actionCreator[ActionConstants.SET_SELECTOR_COLORS](palette); }
+			},
+			template: {
+				query: () => { return this._store.getTemplate(); },
+				update: (template) => { this._actionCreator[ActionConstants.SET_TEMPLATE](template); }
+			}
+		};
 		return c;
 	}
 }

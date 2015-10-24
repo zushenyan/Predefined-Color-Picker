@@ -1,44 +1,27 @@
-import ModelEventListener from "../model/ModelEventListener";
+import ActionConstants from "../action/ActionConstants";
 
-export default class View extends ModelEventListener{
-	constructor(domId, controller, template){
-		super();
-		this._templatePrototype = null;
-		this._template = null;
-		this._domId = null;
+export default class View {
+	constructor(actionCreator, store){
+		this._actionCreator = actionCreator;
+		this._store = store;
 
-		this.controller = controller;
-		this.domId = domId;
-		this.template = template;
+		this._templateInstance = null;
+
+		this._store.addListener(ActionConstants.SET_DOM_ID, this._onDomIdSet.bind(this));
+		this._store.addListener(ActionConstants.SET_TEMPLATE, this._onTemplateSet.bind(this));
 	}
 
-	set domId(id){
-		this._domId = id;
-		if(this._templatePrototype){
-			this.template = this._templatePrototype;
-		}
+	_onDomIdSet(){
+		this._onTemplateSet();
 	}
 
-	get domId(){ return this._domId; }
+	_onTemplateSet(){
+		let templatePrototype = this._store.getTemplate();
+		let domId = this._store.getDomId();
 
-	/**
-		@arg {Template} template - only accepts the NAME of the object, for example:
-		right way
-		view.template = DefaultTemplate;
-		wrong way
-		view.template = new DefaultTemplate();
-	*/
-	set template(template){
-		if(!template){ return; }
-		if(this.template){ this._template.clear(); }
-		this._templatePrototype = template;
-		this._template = new this._templatePrototype(this.domId, this.controller);
-		this.onPaletteColorsSet = this._template.onPaletteColorsSet.bind(this._template);
-		this.onSelectorColorsSet = this._template.onSelectorColorsSet.bind(this._template);
-		this.onPaletteColorChanged = this._template.onPaletteColorChanged.bind(this._template);
-
-		this._template.start();
+		if(!templatePrototype || !domId || domId === ""){ return; }
+		if(this._templateInstance){ this._templateInstance.clear() };
+		this._templateInstance = new templatePrototype(domId, this._actionCreator, this._store);
+		this._templateInstance.start();
 	}
-
-	get template(){ return this._templatePrototype; }
 }

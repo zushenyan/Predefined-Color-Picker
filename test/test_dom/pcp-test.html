@@ -34,12 +34,13 @@
 				{color: "", name: "A"},
 				{color: "", name: "T"},
 			];
-			var mypcp = new pcp.PCP({palette: palette});
-			// var mypcp = new pcp.PCP();
-			mypcp.run();
-
-			var result = mypcp.get("id");
-			console.log(result);
+			var selector = [
+				{color: "#123123", name: "M"},
+				{color: "#654321", name: "O"},
+				{color: "#123456", name: "E"},
+				{color: "#345654", name: "W"}
+			];
+			var mypcp = new pcp.PCP();
 		</script>
 	</body>
 </html>

@@ -1,46 +1,29 @@
-import ColorUtil from "./model/ColorUtil";
-import Color from "./model/Color";
-import Palette from "./model/Palette";
-import Model from "./model/Model";
-import ModelEventListener from "./model/ModelEventListener";
+import Color from "./store/model/Color";
+import ColorUtil from "./store/model/ColorUtil";
+import Palette from "./store/model/Palette";
 
-import Controller from "./controller/Controller";
+import Store from "./store/Store";
+import Dispatcher from "./dispatcher/Dispatcher";
+import ActionCreator from "./action/ActionCreator";
+import ActionConstants from "./action/ActionConstants";
 
-import View from "./view/View";
-import Template from "./view/Template";
-import DefaultTemplate from "./view/DefaultTemplate";
-import DummyTemplate from "./view/DummyTemplate";
+import SimpleTemplate from "./view/template/native/SimpleTemplate";
+import NativeTemplate from "./view/template/native/NativeTemplate";
 
-import Util from "./util/Util";
-import PubSub from "./util/PubSub";
-import ConfigDB from "./util/ConfigDB";
-
-import DEFAULT_CONFIG from "./DefaultConfig";
 import PCP from "./PCP";
 
 export {
-	// model
-	ColorUtil,
 	Color,
+	ColorUtil,
 	Palette,
-	Model,
-	ModelEventListener,
 
-	// controller
-	Controller,
+	Store,
+	Dispatcher,
+	ActionCreator,
+	ActionConstants,
 
-	// view
-	View,
-	Template,
-	DefaultTemplate,
-	DummyTemplate,
+	SimpleTemplate,
+	NativeTemplate,
 
-	// Util
-	Util,
-	PubSub,
-	ConfigDB,
-
-	// main
-	DEFAULT_CONFIG,
 	PCP
 };
