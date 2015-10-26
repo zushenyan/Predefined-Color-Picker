@@ -5,7 +5,7 @@ Works on all **the latest** desktop browsers and mobile devices.
 
 This version is written in Flux and React, however, I didn't tight up Flux with React directly, instead, I separated View in Flux more further. By using Template in View as an adapter, UI is switchable during runtime as long as it conforms Template's interface.
 
-Previous version is written in MVC(or MV*) structure, and most features remain the same. Check it [here](https://github.com/zushenyan/Predefined-Color-Picker/tree/v0.2.0);
+Previous version is written in MVC(or MV*) structure, and most features remain the same. Check it [here](https://github.com/zushenyan/Predefined-Color-Picker/tree/v0.2.0).
 
 ## Tools
 * JS
@@ -196,6 +196,25 @@ this._store.getPaletteColors();   // returns palette colors.
 this._store.getSelectorColors();  // returns selector colors.
 this._store.getDomId();           // returns current dom parent id.
 this._store.getTemplate();        // returns current template it uses.
+```
+
+When you want to listen on events, do these with `Store` in your `mount` function:
+```js
+...
+mount(){
+  this._myUpdateMethod = this._myUpdate.bind(this);
+  this._store.addListener(pcp.ActionConstants.SET_PALETTE_COLORS, this._myUpdateMethod);
+}
+...
+```
+
+And don't forget to remove listeners on `unmount`!
+```js
+...
+unmount(){
+  this._store.removeListener(pcp.ActionConstants.SET_PALETTE_COLORS, this._myUpdateMethod);
+}
+...
 ```
 
 ## How To Use ActionCreator

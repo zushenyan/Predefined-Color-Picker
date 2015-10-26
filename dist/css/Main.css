@@ -1,8 +1,8 @@
-.pcp .palette, .pcp .selector {
+.pcp .pcp-palette, .pcp .pcp-selector {
   margin: 0;
   padding: 10px 0;
   text-align: center; }
-  .pcp .palette .color, .pcp .selector .color {
+  .pcp .pcp-palette .pcp-color, .pcp .pcp-selector .pcp-color {
     display: inline-block;
     position: relative;
     background-color: white;
@@ -11,11 +11,11 @@
     border-radius: 50%;
     border: 1px solid gray;
     margin: 0 10px; }
-    .pcp .palette .color:hover, .pcp .selector .color:hover {
+    .pcp .pcp-palette .pcp-color:hover, .pcp .pcp-selector .pcp-color:hover {
       cursor: pointer; }
-    .pcp .palette .color.selected, .pcp .selector .color.selected {
+    .pcp .pcp-palette .pcp-color.pcp-selected, .pcp .pcp-selector .pcp-color.pcp-selected {
       box-shadow: 0 0 5px 3px aqua; }
-    .pcp .palette .color .label, .pcp .selector .color .label {
+    .pcp .pcp-palette .pcp-color .pcp-label, .pcp .pcp-selector .pcp-color .pcp-label {
       position: absolute;
       left: 0;
       right: 0;
@@ -26,12 +26,12 @@
       -ms-transform: translateY(-50%);
       -o-transform: translateY(-50%);
       transform: translateY(-50%); }
-    .pcp .palette .color.bg-none .label, .pcp .selector .color.bg-none .label {
+    .pcp .pcp-palette .pcp-color.pcp-bg-none .pcp-label, .pcp .pcp-selector .pcp-color.pcp-bg-none .pcp-label {
       background-color: transparent;
       opacity: 0.25; }
-      .pcp .palette .color.bg-none .label:before, .pcp .selector .color.bg-none .label:before, .pcp .palette .color.bg-none .label:after, .pcp .selector .color.bg-none .label:after {
+      .pcp .pcp-palette .pcp-color.pcp-bg-none .pcp-label:before, .pcp .pcp-selector .pcp-color.pcp-bg-none .pcp-label:before, .pcp .pcp-palette .pcp-color.pcp-bg-none .pcp-label:after, .pcp .pcp-selector .pcp-color.pcp-bg-none .pcp-label:after {
         content: ""; }
-      .pcp .palette .color.bg-none .label:before, .pcp .selector .color.bg-none .label:before {
+      .pcp .pcp-palette .pcp-color.pcp-bg-none .pcp-label:before, .pcp .pcp-selector .pcp-color.pcp-bg-none .pcp-label:before {
         position: absolute;
         display: block;
         background-color: lightgray;
@@ -45,7 +45,7 @@
         -ms-transform: translateY(-50%) rotate(45deg);
         -o-transform: translateY(-50%) rotate(45deg);
         transform: translateY(-50%) rotate(45deg); }
-      .pcp .palette .color.bg-none .label:after, .pcp .selector .color.bg-none .label:after {
+      .pcp .pcp-palette .pcp-color.pcp-bg-none .pcp-label:after, .pcp .pcp-selector .pcp-color.pcp-bg-none .pcp-label:after {
         position: absolute;
         display: block;
         background-color: lightgray;
@@ -60,9 +60,9 @@
         -o-transform: translateY(-50%) rotate(-45deg);
         transform: translateY(-50%) rotate(-45deg); }
 
-.pcp .selector {
+.pcp .pcp-selector {
   border-top: 1px solid gray; }
-  .pcp .selector .color.bg-none .label {
+  .pcp .pcp-selector .pcp-color.pcp-bg-none .pcp-label {
     opacity: 1; }
 
 /*# sourceMappingURL=Main.css.map */

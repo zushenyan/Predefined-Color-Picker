@@ -2,12 +2,12 @@
 @import "./Mixins";
 
 .pcp {
-  .palette {
+  .pcp-palette {
     margin: 0;
     padding: 10px 0;
     text-align: center;
 
-    .color {
+    .pcp-color {
       display: inline-block;
       position: relative;
       background-color: $color-bg;
@@ -17,12 +17,12 @@
       border: 1px solid $color-border-color;
       margin: 0 10px;
       &:hover { cursor: pointer; }
-      &.selected { box-shadow: 0 0 5px 3px $color-border-selected; }
-      .label {
+      &.pcp-selected { box-shadow: 0 0 5px 3px $color-border-selected; }
+      .pcp-label {
         @include centering(absolute, both);
       }
-      &.bg-none {
-        .label {
+      &.pcp-bg-none {
+        .pcp-label {
           &:before, &:after { content: ""; }
           &:before { @include slash(45deg, $color-width); };
           &:after { @include slash(-45deg, $color-width); };
@@ -33,12 +33,12 @@
     }
   }
 
-  .selector {
-    @extend .palette;
+  .pcp-selector {
+    @extend .pcp-palette;
     border-top: 1px solid $separator-color;
-    .color {
-      &.bg-none {
-        .label{
+    .pcp-color {
+      &.pcp-bg-none {
+        .pcp-label{
           opacity: 1;
         }
       }

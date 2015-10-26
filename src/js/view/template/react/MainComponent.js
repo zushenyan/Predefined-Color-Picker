@@ -33,8 +33,8 @@ export default class MainComponent extends React.Component {
 
 		return (
 			<div className="pcp">
-				<div className="palette">{ paletteComponents }</div>
-				<div className="selector">{ selectorComponents }</div>
+				<div className="pcp-palette">{ paletteComponents }</div>
+				<div className="pcp-selector">{ selectorComponents }</div>
 			</div>
 		);
 	}
@@ -42,12 +42,12 @@ export default class MainComponent extends React.Component {
 	_createColorComponenets(colors, option){
 		let list = [];
 		let color, name, onClick;
-		for(let i = 0, className = "color"; i < colors.length; i++, className = "color"){
+		for(let i = 0, className = "pcp-color"; i < colors.length; i++, className = "pcp-color"){
 			color = colors[i].color;
 			name = colors[i].name;
 			onClick = option === "palette" ? this._handlePaletteColorClick.bind(this, i) : this._handleSelectorColorClick.bind(this, i);
-			className += (color === "") ? " bg-none" : "";
-			className += (this.state.lastSelectedColorIndex === i && option === "palette") ? " selected" : "";
+			className += (color === "") ? " pcp-bg-none" : "";
+			className += (this.state.lastSelectedColorIndex === i && option === "palette") ? " pcp-selected" : "";
 			list.push(<ColorComponent
 				key={i}
 				onClick={onClick}

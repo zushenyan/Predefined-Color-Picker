@@ -22,8 +22,8 @@ export default class NativeTemplate extends Template{
 		this.uiSelectorContainer = document.createElement("div");
 
 		this.uiMainContainer.classList.add("pcp");
-		this.uiPaletteContainer.classList.add("palette");
-		this.uiSelectorContainer.classList.add("selector");
+		this.uiPaletteContainer.classList.add("pcp-palette");
+		this.uiSelectorContainer.classList.add("pcp-selector");
 
 		this.uiMainContainer.appendChild(this.uiPaletteContainer);
 		this.uiMainContainer.appendChild(this.uiSelectorContainer);
@@ -54,7 +54,7 @@ export default class NativeTemplate extends Template{
 			this.uiPaletteContainer.appendChild(ele);
 		}
 		if(lastSelectedColorIndex !== -1 && lastSelectedColorIndex < colors.length){
-			this.uiPaletteContainer.children[lastSelectedColorIndex].classList.add("selected");
+			this.uiPaletteContainer.children[lastSelectedColorIndex].classList.add("pcp-selected");
 		}
 	}
 
@@ -69,12 +69,12 @@ export default class NativeTemplate extends Template{
 	}
 
 	_paletteMouseEvent(e){
-		let lastSelectedColor = this._queryByClass(this.uiPaletteContainer, "selected");
+		let lastSelectedColor = this._queryByClass(this.uiPaletteContainer, "pcp-selected");
 		if(lastSelectedColor){
-			lastSelectedColor.classList.remove("selected");
+			lastSelectedColor.classList.remove("pcp-selected");
 		}
 		if(e.currentTarget !== lastSelectedColor){
-			e.currentTarget.classList.add("selected");
+			e.currentTarget.classList.add("pcp-selected");
 		}
 	}
 
@@ -95,7 +95,7 @@ export default class NativeTemplate extends Template{
 
 	_getSelectedColorIndex(parent, e){
 		if(parent === this.uiPaletteContainer){
-			let selectedColor = this._queryByClass(parent, "selected");
+			let selectedColor = this._queryByClass(parent, "pcp-selected");
 			return this._indexInParent(parent, selectedColor);
 		}
 		else if(parent === this.uiSelectorContainer){
@@ -114,11 +114,11 @@ export default class NativeTemplate extends Template{
 		let labelEle = document.createElement("div");
 		let bg = color.color === ColorUtil.COLOR_NONE ? "transparent" : color.color;
 
-		colorEle.classList.add("color");
-		labelEle.classList.add("label");
+		colorEle.classList.add("pcp-color");
+		labelEle.classList.add("pcp-label");
 
 		if(color.color === ColorUtil.COLOR_NONE){
-			colorEle.classList.add("bg-none");
+			colorEle.classList.add("pcp-bg-none");
 		}
 
 		colorEle.style.backgroundColor = bg;

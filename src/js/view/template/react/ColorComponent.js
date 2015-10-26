@@ -13,7 +13,7 @@ export default class ColorComponent extends React.Component {
 
 		return (
 			<div className={ this.props.className } style={ style } onClick={ this.props.onClick }>
-				<div className="label">{ this.props.name }</div>
+				<div className="pcp-label">{ this.props.name }</div>
 			</div>
 		);
 	}

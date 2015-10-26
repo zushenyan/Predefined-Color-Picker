@@ -22,7 +22,7 @@
 	</head>
 	<body>
 		<div class="container">
-			<div id="pcp"></div>
+			<div id="pcp1"></div>
 		</div>
 		<div class="container">
 			<div id="pcp2"></div>
@@ -43,8 +43,9 @@
 				{color: "#123456", name: "E"},
 				{color: "#345654", name: "W"}
 			];
-			var mypcp = new pcp.PCP({id: "pcp"});
-			var mypcp2 = new pcp.PCP({id: "pcp2"});
+			var mypcp1 = new pcp.PCP({id: "pcp1"});
+			var mypcp2 = new pcp.PCP({id: "pcp2", template: pcp.NativeTemplate});
+			var mypcp3 = new pcp.PCP({id: "pcp3", template: pcp.SimpleTemplate});
 		</script>
 	</body>
 </html>

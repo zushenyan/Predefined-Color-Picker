@@ -20422,8 +20422,8 @@ var NativeTemplate = (function (_Template) {
 			this.uiSelectorContainer = document.createElement("div");
 
 			this.uiMainContainer.classList.add("pcp");
-			this.uiPaletteContainer.classList.add("palette");
-			this.uiSelectorContainer.classList.add("selector");
+			this.uiPaletteContainer.classList.add("pcp-palette");
+			this.uiSelectorContainer.classList.add("pcp-selector");
 
 			this.uiMainContainer.appendChild(this.uiPaletteContainer);
 			this.uiMainContainer.appendChild(this.uiSelectorContainer);
@@ -20456,7 +20456,7 @@ var NativeTemplate = (function (_Template) {
 				this.uiPaletteContainer.appendChild(ele);
 			}
 			if (lastSelectedColorIndex !== -1 && lastSelectedColorIndex < colors.length) {
-				this.uiPaletteContainer.children[lastSelectedColorIndex].classList.add("selected");
+				this.uiPaletteContainer.children[lastSelectedColorIndex].classList.add("pcp-selected");
 			}
 		}
 	}, {
@@ -20473,12 +20473,12 @@ var NativeTemplate = (function (_Template) {
 	}, {
 		key: "_paletteMouseEvent",
 		value: function _paletteMouseEvent(e) {
-			var lastSelectedColor = this._queryByClass(this.uiPaletteContainer, "selected");
+			var lastSelectedColor = this._queryByClass(this.uiPaletteContainer, "pcp-selected");
 			if (lastSelectedColor) {
-				lastSelectedColor.classList.remove("selected");
+				lastSelectedColor.classList.remove("pcp-selected");
 			}
 			if (e.currentTarget !== lastSelectedColor) {
-				e.currentTarget.classList.add("selected");
+				e.currentTarget.classList.add("pcp-selected");
 			}
 		}
 	}, {
@@ -20501,7 +20501,7 @@ var NativeTemplate = (function (_Template) {
 		key: "_getSelectedColorIndex",
 		value: function _getSelectedColorIndex(parent, e) {
 			if (parent === this.uiPaletteContainer) {
-				var selectedColor = this._queryByClass(parent, "selected");
+				var selectedColor = this._queryByClass(parent, "pcp-selected");
 				return this._indexInParent(parent, selectedColor);
 			} else if (parent === this.uiSelectorContainer) {
 				return this._indexInParent(parent, e.currentTarget);
@@ -20523,11 +20523,11 @@ var NativeTemplate = (function (_Template) {
 			var labelEle = document.createElement("div");
 			var bg = color.color === _storeModelColorUtil2["default"].COLOR_NONE ? "transparent" : color.color;
 
-			colorEle.classList.add("color");
-			labelEle.classList.add("label");
+			colorEle.classList.add("pcp-color");
+			labelEle.classList.add("pcp-label");
 
 			if (color.color === _storeModelColorUtil2["default"].COLOR_NONE) {
-				colorEle.classList.add("bg-none");
+				colorEle.classList.add("pcp-bg-none");
 			}
 
 			colorEle.style.backgroundColor = bg;
@@ -20691,7 +20691,7 @@ var ColorComponent = (function (_React$Component) {
 				{ className: this.props.className, style: style, onClick: this.props.onClick },
 				_react2["default"].createElement(
 					"div",
-					{ className: "label" },
+					{ className: "pcp-label" },
 					this.props.name
 				)
 			);
@@ -20785,12 +20785,12 @@ var MainComponent = (function (_React$Component) {
 				{ className: "pcp" },
 				_react2["default"].createElement(
 					"div",
-					{ className: "palette" },
+					{ className: "pcp-palette" },
 					paletteComponents
 				),
 				_react2["default"].createElement(
 					"div",
-					{ className: "selector" },
+					{ className: "pcp-selector" },
 					selectorComponents
 				)
 			);
@@ -20802,12 +20802,12 @@ var MainComponent = (function (_React$Component) {
 			var color = undefined,
 			    name = undefined,
 			    onClick = undefined;
-			for (var i = 0, className = "color"; i < colors.length; i++, className = "color") {
+			for (var i = 0, className = "pcp-color"; i < colors.length; i++, className = "pcp-color") {
 				color = colors[i].color;
 				name = colors[i].name;
 				onClick = option === "palette" ? this._handlePaletteColorClick.bind(this, i) : this._handleSelectorColorClick.bind(this, i);
-				className += color === "" ? " bg-none" : "";
-				className += this.state.lastSelectedColorIndex === i && option === "palette" ? " selected" : "";
+				className += color === "" ? " pcp-bg-none" : "";
+				className += this.state.lastSelectedColorIndex === i && option === "palette" ? " pcp-selected" : "";
 				list.push(_react2["default"].createElement(_ColorComponent2["default"], {
 					key: i,
 					onClick: onClick,
