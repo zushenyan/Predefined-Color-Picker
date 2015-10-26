@@ -3,9 +3,9 @@ PCP - Predefined Color Picker is an lightweight widget which is used to perform 
 
 Works on all **the latest** desktop browsers and mobile devices.
 
-This version is written in Flux and React, however, I didn't tight up Flux with React directly, instead, I separated View in Flux more further. By using Template in View as an adapter, UI is now switchable during runtime as long as it conforms Template's interface.
+This version is written in Flux and React, however, I didn't tight up Flux with React directly, instead, I separated View in Flux more further. By using Template in View as an adapter, UI is switchable during runtime as long as it conforms Template's interface.
 
-There is a version of PCP written in traditional MVC. Look [here](https://github.com/zushenyan/Predefined-Color-Picker/tree/master).
+Previous version is written in MVC(or MV*) structure, and most features remain the same. Check it [here](https://github.com/zushenyan/Predefined-Color-Picker/tree/v0.2.0);
 
 ## Tools
 * JS
@@ -24,11 +24,11 @@ There is a version of PCP written in traditional MVC. Look [here](https://github
   * Travis-CI
 
 ## Change Log
-* v0.2.1
-  * Now it has a [sister version](https://github.com/zushenyan/Predefined-Color-Picker/tree/react-flux) made with React and Flux.
+* v0.2.5
+  * Now it is made with React & Flux!
   * You can still write your own template.
-  * In React-Flux version, there are some changes in writing template, check out [here](#template) for more details.
-  * In React-Flux version, some features have been changed also.
+  * In this version, there are some changes in writing template, check out [here](#template) for more details.
+  * In this version, some features have been changed also.
 * v0.2.0
   * Completely rewrite the structure. From a mess to MVC(or MV*) unicorn land.
   * Now be able to write your own **Template** for PCP, see [here](#template).
