@@ -1,6 +1,8 @@
 # Predefined-Color-Picker
 PCP - Predefined Color Picker is an lightweight widget which is used to perform simple color picking job.
 
+Visit [here](http://zushenyan.github.io/ReactPlayground/src/react_loves_flux/react_loves_flux.html) for demo.
+
 Works on all **the latest** desktop browsers and mobile devices.
 
 This version is written in Flux and React, however, I didn't tight up Flux with React directly, instead, I separated View in Flux more further. By using Template in View as an adapter, UI is switchable during runtime as long as it conforms Template's interface.
@@ -200,21 +202,17 @@ this._store.getTemplate();        // returns current template it uses.
 
 When you want to listen on events, do these with `Store` in your `mount` function:
 ```js
-...
 mount(){
   this._myUpdateMethod = this._myUpdate.bind(this);
   this._store.addListener(pcp.ActionConstants.SET_PALETTE_COLORS, this._myUpdateMethod);
 }
-...
 ```
 
 And don't forget to remove listeners on `unmount`!
 ```js
-...
 unmount(){
   this._store.removeListener(pcp.ActionConstants.SET_PALETTE_COLORS, this._myUpdateMethod);
 }
-...
 ```
 
 ## How To Use ActionCreator
