@@ -1,13 +1,17 @@
 # Predefined-Color-Picker
 PCP - Predefined Color Picker is an lightweight widget which is used to perform simple color picking job.
 
-Visit [Guitar Scale Builder](https://github.com/zushenyan/Guitar-Scale-Builder) for 0.1.3 PCP demonstration.
-
 Works on all **the latest** desktop browsers and mobile devices.
+
+This version is written in Flux and React, however, I didn't tight up Flux with React directly, instead, I separated View in Flux more further. By using Template in View as an adapter, UI is now switchable during runtime as long as it conforms Template's interface.
+
+There is a version of PCP written in traditional MVC. Look [here](https://github.com/zushenyan/Predefined-Color-Picker/tree/master).
 
 ## Tools
 * JS
   * Babel
+  * React
+    * Flux
 * CSS
   * Sass
 * Task Runner
@@ -20,6 +24,11 @@ Works on all **the latest** desktop browsers and mobile devices.
   * Travis-CI
 
 ## Change Log
+* v0.2.1
+  * Now it has a [sister version](https://github.com/zushenyan/Predefined-Color-Picker/tree/react-flux) made with React and Flux.
+  * You can still write your own template.
+  * In React-Flux version, there are some changes in writing template, check out [here](#template) for more details.
+  * In React-Flux version, some features have been changed also.
 * v0.2.0
   * Completely rewrite the structure. From a mess to MVC(or MV*) unicorn land.
   * Now be able to write your own **Template** for PCP, see [here](#template).
@@ -72,8 +81,6 @@ var mypcp = new pcp.PCP({
   palette: palette,
   selector: selector
 });
-
-mypcp.run();
 ```
 
 Change current palette or selector:
@@ -94,7 +101,7 @@ mypcp.set(config, false);
 mypcp.run();
 ```
 
-Messed up something in config? `pcp.DEFAULT_CONFIG` can save you from panic!
+Messed up something in config? `pcp.DEFAULT_CONFIG` to the rescue!
 ```js
 mypcp.set(pcp.DEFAULT_CONFIG);
 ```
@@ -109,22 +116,20 @@ If you want to subscribe changes on color selection:
 ```js
 onPaletteColorsSet = function(){...};
 onSelectorColorsSet = function(){...};
-onPaletteColorChanged = function(){...};
 
-var tokens = mypcp.subscribe(onPaletteColorsSet, onSelectorColorsSet, onPaletteColorChanged); // will return an list of unique token used for  canceling subscription.
+mypcp.subscribe(onPaletteColorsSet, onSelectorColorsSet);
 ```
-Keep tokens carefully, you will need them for canceling subscription.
 
 If no longer need to listen on changes:
 ```js
-mypcp.unsubscribe(tokens);
+mypcp.unsubscribe(onPaletteColorsSet);
 ```
 
 Don't like default template? Change it!
 ```js
-mypcp.set({template: pcp.DummyTemplate});
+mypcp.set({template: pcp.SimpleTemplate});
 ```
-`DummyTemplate` is an extremely simple template used for showing how to build a template.
+`SimpleTemplate` is an extremely simple template used for showing how to build a template.
 
 Convert colors to serial or serials to colors
 ```js
@@ -138,8 +143,8 @@ You can write your own template as long as you conform `pcp.Template` interface.
 If you are using ES6:
 ```js
 class MyAwesomeTemplate extends pcp.Template {
-  constructor(domId, controller){
-    super(domId, controller);
+  constructor(domId, actionCreator, store){
+    super(domId, actionCreator, store);
     // Only variable declaration is allowed here.
     // Doing other things may lead to unexpected result.
     this.uiMyContainer = null;
@@ -150,31 +155,15 @@ class MyAwesomeTemplate extends pcp.Template {
   // Override this!
   // It's called when id option in config is changed.
   // Construction begins here.
-  start(){
+  mount(){
     this.uiMyContainer = document.createElement("div");
     ...
   }
 
   // Override this if necessary.
   // It's called when id option in config is changed.
-  clear(){
+  unmount(){
     ...
-  }
-
-  // Override these 3 functions!
-  // It's called when palette option in config is changed.
-  onPaletteColorsSet(palette){
-    // do stuff
-  }
-
-  // It's called when selector option in config is changed.
-  onSelectorColorsSet(selector){
-    // do stuff
-  }
-
-  // It's called when this.controller.exec("changePaletteColor", index, newColor) is called.
-  onPaletteColorChanged(palette, index, newColor){
-    // do stuff
   }
 }
 ```
@@ -198,62 +187,39 @@ When you've done writing, do these to load your template.
 ...
 ```
 
-## How To Use Controller
-This section teaches you how to use controller in PCP.
+## How To Use Store
+`Store` is introduced when you extend `Object` from `Template`.
 
-Controller is introduced when you extend Object from Template.
+`Store` exposes some getters to let outside world know `Store`'s state:
 ```js
-class MyTemplate extends pcp.Template {
-  ...
-  doStuff(){
-    this.controller.exec("changePaletteColor", 0, newColor);
-  }
-  ...
-}
+this._store.getPaletteColors();   // returns palette colors.
+this._store.getSelectorColors();  // returns selector colors.
+this._store.getDomId();           // returns current dom parent id.
+this._store.getTemplate();        // returns current template it uses.
 ```
 
-Controller in PCP lets you to manipulate stuffs in Model. It prevents users from operating model directly for the sake of hiding complex details.
-```js
-// exec used for manipulation something.
-controller.exec("setPaletteColors", colors);
+## How To Use ActionCreator
+This section teaches you how to use `ActionCreator` in PCP.
 
-// query, as you expected, only lets you look up thins.
-controller.query("palette");
+`ActionCreator` is introduced when you extend `Object` from `Template`.
+
+To use `ActionCreator`, combining with `ActionConstants` is required:
+```js
+this._actionCreator[pcp.ActionConstants.SET_PALETTE_COLORS](palette);
 ```
 
-Controller provides some commands for `exec`
+`ActionConstants` provides some constants to let you decide what type of events or actions you want to listen on or execute.
 ```js
-var colors = [
-  {color: "#000000", name: ""},
-  {color: "#111111", name: "A"},
-  {color: "#222222", name: "B"},
-];
-var index = 0;
-var newColor = {color: "#112233", name: "foo"};
-
-// for setting palette colors like you do `pcp.set({palette: colors})` to config
-controller.exec("setPaletteColors", colors);
-
-// for setting selector colors like you do `pcp.set({selector: colors})` to config
-controller.exec("setSelectorColors", colors);
-
-// for changing palette color, throw error when index is out of bound or newColor's formation is not valid.
-controller.exec("changePaletteColor", index, newColor);
-
-// for subscription and canceling.
-var tokens = controller.exec("subscribe", onPaletteColorsSet, onSelectorColorsSet, onPaletteColorChanged);
-controller.exec("unsubscribe", tokens);
+ActionConstants.SET_PALETTE_COLORS;
+ActionConstants.SET_SELECTOR_COLORS;
+ActionConstants.CHANGE_PALETTE_COLOR;
+ActionConstants.SET_DOM_ID;
+ActionConstants.SET_TEMPLATE;
 ```
 
-Controller also provides some commands for `query` for users to check out what information they need
+All of above accept only one parameter, except for `ActionConstants.CHANGE_PALETTE_COLOR` which needs to pass in an `Object` with extra keys:
 ```js
-// Returns a copy of palette object.
-// Palette object contains
-// {Array} colors - An array of Color objects. Use colors[0].color or colors[0].name to access properties you want.
-controller.query("palette");
-
-// Same to above.
-controller.query("selector");
+this._actionCreator[pcp.ActionConstants.CHANGE_PALETTE_COLOR]({index: 5, newColor: {color: "#123123", name: "meow"}});
 ```
 
 ## Author & Licence

@@ -95,7 +95,7 @@ describe("Flux", function(){
 		it("should remove listener properly", function(){
 			var callback = function(){};
 
-			store.addListener(ActionConstants.SET_TEMPLATE, callback);
+			store.addListener(ActionConstants.SET_TEMPLATE, callback.bind(this));
 			store.removeListener(ActionConstants.SET_TEMPLATE, callback);
 			expect(store.listeners()).to.be.length(0);
 		});

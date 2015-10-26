@@ -6,9 +6,12 @@ export default class SimpleTemplate extends Template{
 		super(domId, actionCreator, store);
 		this.uiButton = null;
 		this.uiMainContainer = null;
+
+		this._onPaletteColorsSetToken = this.onPaletteColorsSet.bind(this);
+		this._onSelectorColorsSetToken = this.onSelectorColorsSet.bind(this);
 	}
 
-	start(){
+	mount(){
 		this.uiMainContainer = document.getElementById(this._domId);
 		this.uiButton = document.createElement("button");
 		this.uiButton.innerHTML = "click me";
@@ -17,9 +20,17 @@ export default class SimpleTemplate extends Template{
 		this.uiMainContainer.classList.add("pcp");
 		this.uiMainContainer.appendChild(this.uiButton);
 
-		this._store.addListener(ActionConstants.SET_PALETTE_COLORS, this.onPaletteColorsSet.bind(this));
-		this._store.addListener(ActionConstants.SET_SELECTOR_COLORS, this.onSelectorColorsSet.bind(this));
-		this._store.addListener(ActionConstants.CHANGE_PALETTE_COLOR, this.onPaletteColorsSet.bind(this));
+		this._store.addListener(ActionConstants.SET_PALETTE_COLORS , this._onPaletteColorsSetToken);
+		this._store.addListener(ActionConstants.SET_SELECTOR_COLORS, this._onSelectorColorsSetToken);
+		this._store.addListener(ActionConstants.CHANGE_PALETTE_COLOR, this._onPaletteColorsSetToken);
+	}
+
+	unmount(){
+		this.uiMainContainer.innerHTML = "";
+		this.uiMainContainer.className = "";
+		this._store.removeListener(ActionConstants.SET_PALETTE_COLORS , this._onPaletteColorsSetToken);
+		this._store.removeListener(ActionConstants.SET_SELECTOR_COLORS, this._onSelectorColorsSetToken);
+		this._store.removeListener(ActionConstants.CHANGE_PALETTE_COLOR, this._onPaletteColorsSetToken);
 	}
 
 	onPaletteColorsSet(){

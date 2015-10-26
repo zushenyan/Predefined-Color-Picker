@@ -10,6 +10,6 @@ export default class Template{
 		return this;
 	}
 
-	clear(){ throw new Error("Needs to be implemented."); }
-	start(){ throw new Error("Needs to be implemented."); }
+	mount(){ throw new Error("Needs to be implemented."); }
+	unmount(){ throw new Error("Needs to be implemented."); }
 }

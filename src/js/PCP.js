@@ -14,7 +14,7 @@ export default class PCP {
 		this._actionCreator = new ActionCreator(this._dispatcher);
 		this._view = new View(this._actionCreator, this._store);
 
-		this.set(DEFAULT_CONFIG);
+		this._initialSetup(config);
 	}
 
 	set(newConfig = {}){
@@ -35,6 +35,13 @@ export default class PCP {
 	unsubscribe(onPaletteColorsSet, onSelectorColorsSet){
 		this._store.removeListener(ActionConstants.SET_PALETTE_COLORS, onPaletteColorsSet);
 		this._store.removeListener(ActionConstants.SET_SELECTOR_COLORS, onSelectorColorsSet);
+	}
+
+	_initialSetup(config){
+		Object.keys(DEFAULT_CONFIG).forEach((key) => {
+			let data = config[key] ? config[key] : DEFAULT_CONFIG[key];
+			this._config[key].update(data);
+		});
 	}
 
 	_createConfig(){

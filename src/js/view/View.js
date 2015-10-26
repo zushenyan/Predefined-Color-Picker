@@ -19,9 +19,10 @@ export default class View {
 		let templatePrototype = this._store.getTemplate();
 		let domId = this._store.getDomId();
 
-		if(!templatePrototype || !domId || domId === ""){ return; }
-		if(this._templateInstance){ this._templateInstance.clear() };
+		if(!templatePrototype){ return; }
+		if(!document.getElementById(domId)){ console.log(`"${domId}" does not exist`); return; }
+		if(this._templateInstance){ this._templateInstance.unmount() };
 		this._templateInstance = new templatePrototype(domId, this._actionCreator, this._store);
-		this._templateInstance.start();
+		this._templateInstance.mount();
 	}
 }

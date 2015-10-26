@@ -27,6 +27,9 @@
 		<div class="container">
 			<div id="pcp2"></div>
 		</div>
+		<div class="container">
+			<div id="pcp3"></div>
+		</div>
 		<script src="../../dist/js/Main.js"></script>
 		<script>
 			var palette = [
@@ -40,7 +43,8 @@
 				{color: "#123456", name: "E"},
 				{color: "#345654", name: "W"}
 			];
-			var mypcp = new pcp.PCP();
+			var mypcp = new pcp.PCP({id: "pcp"});
+			var mypcp2 = new pcp.PCP({id: "pcp2"});
 		</script>
 	</body>
 </html>

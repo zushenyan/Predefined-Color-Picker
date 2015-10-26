@@ -11,9 +11,12 @@ export default class NativeTemplate extends Template{
 
 		this.paletteStoreToken = null;
 		this.selectorStoreToken = null;
+
+		this._onPaletteColorsSetToken = this.onPaletteColorsSet.bind(this);
+		this._onSelectorColorsSetToken = this.onSelectorColorsSet.bind(this);
 	}
 
-	start(){
+	mount(){
 		this.uiMainContainer = document.getElementById(this._domId);
 		this.uiPaletteContainer = document.createElement("div");
 		this.uiSelectorContainer = document.createElement("div");
@@ -28,16 +31,17 @@ export default class NativeTemplate extends Template{
 		this.onPaletteColorsSet();
 		this.onSelectorColorsSet();
 
-		this._store.addListener(ActionConstants.SET_PALETTE_COLORS ,this.onPaletteColorsSet.bind(this));
-		this._store.addListener(ActionConstants.SET_SELECTOR_COLORS, this.onSelectorColorsSet.bind(this));
-		this._store.addListener(ActionConstants.CHANGE_PALETTE_COLOR, this.onPaletteColorsSet.bind(this));
+		this._store.addListener(ActionConstants.SET_PALETTE_COLORS , this._onPaletteColorsSetToken);
+		this._store.addListener(ActionConstants.SET_SELECTOR_COLORS, this._onSelectorColorsSetToken);
+		this._store.addListener(ActionConstants.CHANGE_PALETTE_COLOR, this._onPaletteColorsSetToken);
 	}
 
-	clear(){
+	unmount(){
 		this.uiMainContainer.innerHTML = "";
 		this.uiMainContainer.className = "";
-		this._store.removeListener(ActionConstants.SET_PALETTE_COLORS ,this.onPaletteColorsSet);
-		this._store.removeListener(ActionConstants.SET_SELECTOR_COLORS, this.onSelectorColorsSet);
+		this._store.removeListener(ActionConstants.SET_PALETTE_COLORS , this._onPaletteColorsSetToken);
+		this._store.removeListener(ActionConstants.SET_SELECTOR_COLORS, this._onSelectorColorsSetToken);
+		this._store.removeListener(ActionConstants.CHANGE_PALETTE_COLOR, this._onPaletteColorsSetToken);
 	}
 
 	onPaletteColorsSet(){

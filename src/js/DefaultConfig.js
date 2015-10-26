@@ -1,7 +1,8 @@
 import NativeTemplate from "./view/template/native/NativeTemplate";
+import ReactTemplate from "./view/template/react/ReactTemplate";
 
 let DEFAULT_CONFIG = {
-	id: "pcp",
+	id: "",
 	palette: [
 		{color: "", name: "A"},
 		{color: "", name: "B"},
@@ -16,7 +17,7 @@ let DEFAULT_CONFIG = {
 		{color: "#00baff", name: ""},
 		{color: "#0021ff", name: ""},
 	],
-	template: NativeTemplate
+	template: ReactTemplate
 };
 
 export { DEFAULT_CONFIG as default };
